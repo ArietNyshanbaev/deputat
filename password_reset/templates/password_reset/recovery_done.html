@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+{%load staticfiles%}
+    	<br><br><br>
+    	<div class="section gray-light">
+            <br><br><br>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 text-center">
+                    <h4>Восстановление пароля</h4>
+                    <img width="200" height="200" src="{% static 'images/forgot4.png' %}">
+                    <br>
+                    <h6 style="color:#f95446;">{% trans "Your password has successfully been reset. You can use it right now on the login page." %}.</h6>
+
+                    <div class="span7">
+                        <a href="{% url 'auths:signin'%}"><p class="btn  btn-primary btn-md form-control" role="button">Войти</p></a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.section -->
+        <br><br><br>
+    </div>
+</div>
+{% endblock %}

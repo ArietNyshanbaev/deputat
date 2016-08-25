@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+	{%load staticfiles%}
+
+    	<br><br><br>
+    	<div class="section gray-light">
+            <br><br><br>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 text-center">
+
+                        <h4>Восстановление пароля</h4>
+                        <img width="200" height="300" src="{% static 'images/forgot3.png' %}">
+                        <br>
+
+					    {% if invalid %}{% url "password_reset_recover" as recovery_url %}
+							<h5>{% blocktrans %}Sorry, this password reset link is invalid. You can still <a href="{{ recovery_url }}">request a new one</a>.{% endblocktrans %}</h5>
+						{% else %}
+							<h6>{% blocktrans %}Hi, <strong>{{ username }}</strong>. Please choose your new password.{% endblocktrans %}</h6>
+							<br><br>
+							{% for field in form %}
+	                         	{% if field.errors %}
+							        <div class="alert alert-danger" role="alert">{{ field.errors }}<br></div>
+							    {% endif %}
+							{% endfor %}
+							<form method="post" action="{% url "password_reset_reset" token %}" class="label_black">
+								{% csrf_token %}
+								{% for field in form %}
+								    <div class="fieldWrapper">
+								        {{ field.label_tag }} {{ field }}
+								        <br>
+								    </div>
+								{% endfor %}
+								<input class="btn  btn-primary btn-md form-control" role="button" type="submit" value="{% trans "Set new password" %}">
+							</form>
+						{% endif %}						
+
+                </div>
+            </div>
+
+        </div><!-- /.section -->
+        <br><br><br>
+    </div>
+</div>
+{% endblock %}

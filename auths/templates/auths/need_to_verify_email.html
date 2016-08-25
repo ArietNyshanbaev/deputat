@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{%load staticfiles%}
+{% block roadmap %}
+<li><a href="">{{user.username}}</a></li>
+{% endblock %}
+{% block content %}
+
+
+  <br><br><br>
+      
+      
+      
+  <section class="volunteer-head text-center" >
+    <div class="constrain " >
+      <span class="title">Нужно подтвердить ваш  Email.</span>
+      <h3 >На ваш email ({{user.email}}) мы отправили ссылку для подтверждения, пройдите по ней что бы подтвердить ваш еmail.</h3>
+    </div><br><br>
+    <a href="{% url 'auths:resend_verification'%}">
+        <button class="btn  btn-primary"> Отправить заново </button>
+    </a>
+    <br>
+  </section>
+  
+{% endblock %}

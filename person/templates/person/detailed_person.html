@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{%load staticfiles%}
+{% block content %}
+
+
+
+    <section class="container">
+      
+        <div class="header__block mb20">
+          
+        </div>
+      
+      
+      
+  <div class="constrain">
+    <div class="mini-head">
+      <span class="mini-head__title">персона</span>
+    </div>
+    <div class="profile-status"></div>
+    <div class="profile-main mb50">
+      <div class="view">
+        <div class="avatar-circle avatar-circle_large">
+          <img src="../../{{person.photo}}" alt="Путин Владимир" class="avatar-img">
+        </div>
+        
+
+<div class="favorites-wrapper">
+
+    
+        <form action="http://www.obeschania.ru/favorites/" method="POST">
+            <div style="display:none"><input type="hidden" name="csrfmiddlewaretoken" value="215943b90aa7f9ea8450a83a06e649f9"></div>
+            <input type="hidden" name="app_label" value="persons" id="id_app_label"><input type="hidden" name="model" value="person" id="id_model"><input type="hidden" name="object_id" value="1" id="id_object_id">
+            <input type="submit" class="btn mb20" value="Следить">
+        </form>
+    
+
+</div>
+
+      </div>
+      <div class="info">
+        <h1 class="name">{{person.last_name}} {{person.first_name}} {{person.middle_name}}</h1>
+        <span class="org">Фракция {{person.party.title}}</span>
+      </div>
+      
+
+
+<div class="statistic">
+    
+      <div class="item tooltip-effect tooltip-effect-top">
+        <span class="num white show">46%</span>
+        <span class="text">рейтинг<br>доверия</span>
+        <span class="tooltip-content">Рейтинг сформирован на основе голосования за каждое высказывание {{person.last_name}} {{person.first_name}}</span>
+      </div>
+    
+    
+      <div class="item">
+        <span class="num white show">{{done_promises}}</span>
+        <a href="http://www.obeschania.ru/documents/?status_fulfilled=on&amp;person=1" class="btn_opacity-green">выполненные<br>обещания</a>
+      </div>
+    
+    
+      <div class="item">
+        <span class="num white show">{{not_done_promises}}</span>
+        <a href="http://www.obeschania.ru/documents/?status_not_fulfilled=on&amp;person=1" class="btn_opacity-green">невыполненные<br>обещания</a>
+      </div>
+    
+</div>
+
+    </div>
+    <aside class="aside aside-profile">
+      
+      
+        <div class="item">
+          <span class="block-title">Контактные данные</span>
+          <span class="text">{{person.contacts}}</span>
+        </div>
+      
+        <div class="item">
+          <span class="block-title">Семейное положение</span>
+          <span class="text">{{person.marital_status}}</span>
+        </div>
+      
+        {% if person.category == 'МК'%}
+          <div class="item">
+            <span class="block-title">Регион</span>
+            <span class="text">{{person.region}}</span>
+          </div>
+        {% endif %}
+
+    </aside>
+    <section class="content">
+    
+      <div class="wbiography mb40">
+        <h2 class="block-title mb15">Биография {{person.last_name}} {{person.first_name}}</h2>
+        <div class="text">
+          <p style="text-align: justify;">{{person.biography}}</p>
+        </div>
+      </div>
+    
+      <div class="profile__speech">
+        
+            <h2 class="block-title mb25">выразите ваше отношение к деятельности {{person.last_name}} {{person.first_name}}</h2>
+            
+              <div class="speech__list">
+                
+
+{% for promis in promises %}
+<section class="speech speech_promises speech_min">
+  <span class="speech__section status-actually">
+    
+      Обещание
+      
+      
+      
+    </span>
+  <div class="speech__content">
+    <div class="info">
+      <div class="entry-title">
+        <a href="{% url 'promis:detailed_promis' promis.id %}" class="title-link">{{promis.title}}</a>
+      </div>
+    </div>
+  </div>
+  <div class="speech__ctrl">
+      
+
+<div class="bvote bvote_horz">
+    
+        <div class="bvote__load" style="display:none">
+            <span class="text">Спасибо, <br>ваш голос <br>учтен</span>
+            <span class="text text_bottom">Рейтинг <br>в процессе <br>подсчета</span>
+        </div>
+        <div class="js_vote__scale bvote__scale " style="display:none">
+            <span class="bg" style="width: 82%"></span>
+                <span class="value">
+                    <span class="value-rating">82%</span>
+                    <span class="value-title">Рейтинг доверия</span>
+                </span>
+        </div>
+        <div class="bvote__action">
+                <a href="{% url 'promis:believe' promis.id %}"  class="bvote-btn bvote-btn_believe">
+                    <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i><span class="btn-text">Верю</span>
+                </a>
+                <a href="{% url 'promis:not_believe' promis.id %}"  class="bvote-btn bvote-btn_bottom bvote-btn_not-believe">
+                    <i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i><span class="btn-text">Не верю</span>
+                </a>
+        </div>
+        <div style="display:none;">
+            <input class="js_vote_sum_votes_plus_one" value="51">
+            <input class="js_vote_yes" value="41">
+        </div>
+    
+</div>
+
+  </div>
+</section>
+{% empty %}
+<section class="speech speech_promises speech_min text-center">
+     <h5>Пока нет добавленных Обещаний</h5>
+</section>
+{% endfor %}
+             
+
+
+        
+
+        
+      </div>
+    </section>
+  </div><!-- class="constrain" -->
+  
+
+  
+{% endblock %}

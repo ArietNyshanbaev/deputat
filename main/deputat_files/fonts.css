@@ -1,0 +1,19 @@
+@font-face {
+    font-family: "RobotoRegular";
+    src: url("/css/fonts/RobotoRegular.eot");
+    src: url("/css/fonts/RobotoRegular.eot?#iefix") format("embedded-opentype"),
+    url("/css/fonts/RobotoRegular.woff") format("woff"),
+    url("/css/fonts/RobotoRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "RobotoBold"; */
+@font-face {
+    font-family: "RobotoBold";
+    src: url("/css/fonts/RobotoBold.eot");
+    src: url("/css/fonts/RobotoBold.eot?#iefix")format("embedded-opentype"),
+    url("/css/fonts/RobotoBold.woff") format("woff"),
+    url("/css/fonts/RobotoBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}

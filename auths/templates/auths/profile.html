@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{%load staticfiles%}
+{% block roadmap %}
+<li><a href="">{{user.username}}</a></li>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+      <section class="container">
+  <br><br><br>
+  <div class="constrain">
+    <div class="mini-head">
+      <span class="mini-head__title">Профиль</span>
+    </div>
+    <br><br>
+<div class="row">
+<div class="col-md-4"></div>
+<div class="col-md-4">
+  <div class="user-card">
+    <div class="info">
+      <span class="name">{{user.username}}</span>
+      <span class="name">{{user.email}}</span>
+      <span class="desc">
+        <br>
+      </span>
+        <a data-toggle="modal" data-target="#changePasswordModal" class="btn">Сменить пароль</a>
+    </div><!-- class="info" -->
+  <div class="stats">
+    <div class="stats-item">
+      <span class="stats-value">{{promises}}</span>
+      обещаний добавлено
+    </div>
+    <div class="stats-item">
+      <span class="stats-value">{{results}}</span>
+      итогов подведено
+    </div>
+  </div>
+  </div><!-- class="user-card" -->
+</div>
+</div>
+  </div><!-- class="constrain" -->
+  </section>
+</div>
+<!-- ===================== MODAL PAGES ====================== -->
+<!-- SING IN MODAL PAGE -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="js-submit-form">
+    <div class="popup__head">
+      <span class="main-title uppercase">Сменить пароль</span>
+    </div>
+    <div class="popup__content">
+      <div class="form-login fields-small">
+        {% if request.GET.error == 'change_password' %}
+          <div class="alert alert-info" role="alert">
+            {{request.GET.note}}
+          </div>
+        {% endif %}
+        <form action="{% url 'auths:change_password' %}" method="POST">
+        {% csrf_token %}
+          <div class="form-section clearfix">
+            <div class="field ">
+              <input placeholder="Нынешний пароль" type="password" name="password_old" id="id_password_old">
+            </div>
+            <div class="field ">
+              <input placeholder="Новый пароль" type="password" name="password_new" id="id_password_new">
+            </div>
+            <div class="field ">
+              <input placeholder="Повторите новый пароль" type="password" name="password_new1" id="id_password_new1">
+            </div>
+            <div class="left">
+              <a href="javascript:;" data-fancybox-href="/accounts/password/reset/" class="js-popupwin fancybox.ajax pseudo">Забыли пароль</a>
+            </div>
+          </div>
+          <div class="form-login__footer">
+            <input type="submit" value="Сменить" class="btn btn_max btn_supper">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+</div>
+{% if request.GET.error == 'change_password' %}
+  <script type="text/javascript">
+      $(window).load(function(){
+          $('#changePasswordModal').modal('show');
+      });
+  </script>
+{% endif %}
+{% endblock %}

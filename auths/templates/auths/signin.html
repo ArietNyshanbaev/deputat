@@ -1,0 +1,44 @@
+{% extends "main/base.html" %}
+{%load staticfiles%}
+{% block roadmap %}
+<li><span style="color:white">Войти</span></li>
+{% endblock %}
+{% block content %}
+<div class="section gray-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                <h4>Войти</h4>
+                <br>
+                {% if error_message %}
+                <div class="alert alert-danger" role="alert">{{error_message}}<br></div>
+                {% endif %}
+                <form action="{% url 'auths:signin'%}" method="POST" class="label_black" role="form" style="padding-bottom:75px; padding-top:25px;">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}" />
+                    {% for field in form %}
+                    <div class="form-group">
+                        {{field.label_tag}}
+                        {% if field.errors %}
+                        <div class="alert alert-danger" role="alert">{{field.errors}}</div>
+                        {% endif %}
+                        {{field}}
+                    </div>
+                    {% endfor %}
+                    <a href="{% url 'password_reset_recover' %}">
+                        <p class="text-center">Забыл пароль</p>
+                    </a>
+                    <br>
+                    <div class="span7">
+                        <input type='submit' value='Войти'  class="btn  btn-primary btn-md form-control" role="button">
+                        <br>или<br>
+                        <a href="{% url 'auths:signup'%}">
+                        <input value='Зарегистрироваться'  class=" btn btn-inform btn-lg form-control" >
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,705 @@
+﻿{% extends 'base.html' %}
+{%load staticfiles%}
+{% block content %}
+<!-- Button trigger modal -->
+
+<br>
+ <div class="container">
+    <h2 class="text-center">Новости</h2>
+  </div>
+  <br><br><br>
+    <section class="container">
+    <div class="constrain">
+      <div class="tile-widgets" id="js-tile-widgets">
+          
+          
+<div class="row">      
+{% for new in news %}             
+<div class="cell">
+<div class="tw-block tw-block_cover tw-block_story">
+  <span class="status ">
+    Новости
+  </span>
+    <div class="cover" style="background-image: url(../../{{new.photo}});"></div>
+      <div class="wrap-title">
+        <a href="/news/detailed_news/{{new.id}}" class="title">{{new.title}}</a>
+      </div>  
+</div> 
+</div>
+{% endfor %}            
+              <div class="cell">
+
+<div class="tw-block">
+  <span class="status status-fulfilled">
+    Новости
+  </span>
+      <div class="tw-block-avatart">
+          <a href="http://www.obeschania.ru/documents/promises/Google-krym" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/organization_272.png.80x80_q85_crop-,0.jpg' %}" alt="Google" class="avatar-img">
+          </a>
+      </div>
+      <a href="http://www.obeschania.ru/documents/promises/Google-krym" class="tw-block-title">
+          Google:
+        Вернем на карту Крыма прежние названия населенных пунктов
+      </a>
+</div> 
+              </div>
+            </div>
+            <div class="row">
+              <div class="cell">
+<div class="tw-block">
+  <span class="status status-actually">
+    Обещание
+  </span>
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/promises/assanzh-klinton" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/assanzh.jpg.80x80_q85_crop-,0.jpg' %}" alt="Джулиан Ассанж" class="avatar-img">
+          </a>
+      </div>
+      <span class="tw-block-note">Основатель WikiLeaks</span>
+      <a href="http://www.obeschania.ru/documents/promises/assanzh-klinton" class="tw-block-title">
+        
+          Джулиан Ассанж:
+        
+        В ближайшее время опубликую разоблачительные материалы про Хилари Клинтон
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block">
+  <span class="status status-actually">
+    Обещание
+    
+      
+        
+        
+        
+      
+    
+  </span>
+
+  
+
+  
+    
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/promises/tramp-krym" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/tramp.jpg.80x80_q85_crop-,0.jpg' %}" alt="Дональд Трамп" class="avatar-img">
+          </a>
+        
+        
+        
+      </div>
+    
+    
+
+    
+      <span class="tw-block-note">Бизнесмен</span>
+    
+
+    
+      <a href="http://www.obeschania.ru/documents/promises/tramp-krym" class="tw-block-title">
+        
+          Дональд Трамп:
+        
+        Если стану президентом США, рассмотрю вопрос признания Крыма российским
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block tw-block_cover tw-block_story">
+  <span class="status ">
+    Сюжет
+    
+  </span>
+
+  
+    <div class="cover" style="background-image: url(/media/thumbnails/trends/trend_background/Bez_imeni-2_1.jpg.310x300_q85_crop-%2C0.jpg);"></div>
+  
+
+  
+    
+    
+
+    
+
+    
+      <div class="wrap-title">
+        <a href="http://www.obeschania.ru/trends/vibori-usa-2016" class="title">Выборы президента США - 2016</a>
+      </div>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="row">
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block">
+  <span class="status status-actually">
+    Обещание
+    
+      
+        
+        
+        
+      
+    
+  </span>
+
+  
+
+  
+    
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/promises/vneshekonombank-pribil" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/Bez_imeni-1.jpg.80x80_q85_crop-,0.jpg' %}" alt="Сергей Горьков" class="avatar-img">
+          </a>
+        
+        
+        
+      </div>
+    
+    
+
+    
+      <span class="tw-block-note">Глава Внешэкономбанка</span>
+    
+
+    
+      <a href="http://www.obeschania.ru/documents/promises/vneshekonombank-pribil" class="tw-block-title">
+        
+          Сергей Горьков:
+        
+        Внешэкономбанк выйдет на прибыльность в 2018 году
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block">
+  <span class="status status-actually">
+    Обещание
+    
+      
+        
+        
+        
+      
+    
+  </span>
+
+  
+
+  
+    
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/promises/livanov-stipendii" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/livanov.jpg.80x80_q85_crop-,0.jpg' %}" alt="Дмитрий Ливанов" class="avatar-img">
+          </a>
+        
+        
+        
+      </div>
+    
+    
+
+    
+      <span class="tw-block-note">Министр образования и науки РФ</span>
+    
+
+    
+      <a href="http://www.obeschania.ru/documents/promises/livanov-stipendii" class="tw-block-title">
+        
+          Дмитрий Ливанов:
+        
+        Студенческие стипендии значительно вырастут в 2019 году
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block">
+  <span class="status status-actually">
+    Прогноз
+    
+      
+        
+        
+        
+      
+    
+  </span>
+
+  
+
+  
+    
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/forecasts/olimpiada-rf-medali" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/organization_533.png.80x80_q85_crop-,0.jpg' %}" alt="Goldman Sachs" class="avatar-img">
+          </a>
+        
+        
+        
+      </div>
+    
+    
+
+    
+
+    
+      <a href="http://www.obeschania.ru/documents/forecasts/olimpiada-rf-medali" class="tw-block-title">
+        
+          Goldman Sachs:
+        
+        Сборная России станет четвертой по числу медалей на Олимпиаде-2016
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+            </div>
+            <div class="row">
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block">
+  <span class="status status-actually">
+    Прогноз
+    
+      
+        
+        
+        
+      
+    
+  </span>
+
+  
+
+  
+    
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/forecasts/sechin-neft" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/sechin.jpg.80x80_q85_crop-,0.jpg' %}" alt="Игорь Сечин" class="avatar-img">
+          </a>
+        
+        
+        
+      </div>
+    
+    
+
+    
+      <span class="tw-block-note">Президент "Роснефти" </span>
+    
+
+    
+      <a href="http://www.obeschania.ru/documents/forecasts/sechin-neft" class="tw-block-title">
+        
+          Игорь Сечин:
+        
+        Цены на нефть до конца года будут на уровне 50-55 долларов за баррель
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block tw-block_cover tw-block_story">
+  <span class="status ">
+    Сюжет
+    
+  </span>
+
+  
+    <div class="cover" style="background-image: url(/media/thumbnails/trends/trend_background/d1f3a58e45e6159f7d4a7e310e2e75fe.jpg.310x300_q85_crop-%2C0.jpg);"></div>
+  
+
+  
+    
+    
+
+    
+
+    
+      <div class="wrap-title">
+        <a href="http://www.obeschania.ru/trends/neft" class="title">Цены на нефть</a>
+      </div>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block">
+  <span class="status status-actually">
+    Прогноз
+    
+      
+        
+        
+        
+      
+    
+  </span>
+
+  
+
+  
+    
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/forecasts/brent-stoimost" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/organization_1328.png.80x80_q85_crop-,0.jpg' %}" alt="Bank of America" class="avatar-img">
+          </a>
+        
+        
+        
+      </div>
+    
+    
+
+    
+      <span class="tw-block-note">Универсальный банк</span>
+    
+
+    
+      <a href="http://www.obeschania.ru/documents/forecasts/brent-stoimost" class="tw-block-title">
+        
+          Bank of America:
+        
+        Стоимость нефти марки Brent в 2017 году достигнет 70 долларов
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="row">
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block">
+  <span class="status status-actually">
+    Прогноз
+    
+      
+        
+        
+        
+      
+    
+  </span>
+
+  
+
+  
+    
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/forecasts/aviareicy-egipet" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/sokolov_2.jpg.80x80_q85_crop-,0.jpg' %}" alt="Максим Соколов" class="avatar-img">
+          </a>
+        
+        
+        
+      </div>
+    
+    
+
+    
+      <span class="tw-block-note">Министр транспорта РФ</span>
+    
+
+    
+      <a href="http://www.obeschania.ru/documents/forecasts/aviareicy-egipet" class="tw-block-title">
+        
+          Максим Соколов:
+        
+        Авиарейсы между Россией и Египтом возобновятся до конца года
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block">
+  <span class="status status-actually">
+    Обещание
+    
+      
+        
+        
+        
+      
+    
+  </span>
+
+  
+
+  
+    
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/promises/shkoli-podmoskovie" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/Bez_imeni-1.jpg.80x80_q85_crop-,0(1).jpg' %}" alt="Сергей Пахомов" class="avatar-img">
+          </a>
+        
+        
+        
+      </div>
+    
+    
+
+    
+      <span class="tw-block-note">Министр строительного комплекса Московской области</span>
+    
+
+    
+      <a href="http://www.obeschania.ru/documents/promises/shkoli-podmoskovie" class="tw-block-title">
+        
+          Сергей Пахомов:
+        
+        За пять лет в Подмосковье построят 104 новые школы
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+              <div class="cell">
+                
+                  
+                    
+    
+
+<div class="tw-block">
+  <span class="status status-actually">
+    Прогноз
+    
+      
+        
+        
+        
+      
+    
+  </span>
+
+  
+
+  
+    
+      <div class="tw-block-avatart">
+        
+          <a href="http://www.obeschania.ru/documents/forecasts/kitaj-miaso" class="avatar-circle avatar-circle_middle">
+            <img src="{% static 'images/dep/tkachev.jpg.80x80_q85_crop-,0.jpg' %}" alt="Александр Ткачев" class="avatar-img">
+          </a>
+        
+        
+        
+      </div>
+    
+    
+
+    
+      <span class="tw-block-note">Министр сельского хозяйства РФ</span>
+    
+
+    
+      <a href="http://www.obeschania.ru/documents/forecasts/kitaj-miaso" class="tw-block-title">
+        
+          Александр Ткачев:
+        
+        Россия начнет поставки мяса птицы в Китай до конца года
+      </a>
+    
+
+  
+
+  
+</div>
+
+
+
+                  
+                
+              </div>
+            
+            </div>
+          
+        
+      </div><!-- class="tile-widgets" -->
+    </div><!-- class="constrain" -->
+  
+{% endblock %}

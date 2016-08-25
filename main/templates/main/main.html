@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{%load staticfiles%}
+{% block content %}
+<!-- Button trigger modal -->
+
+<br>
+ <div class="container">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-1"> 
+            <a href="{% url 'person:zhogorku_kenesh' %}">
+                <img class="img-responsive" src="{% static 'images/jogorku.jpg'%}">
+                
+                <button class="btn btn-success form-control" style="border-radius:0; background-color:#1cbbb4;"><span class="text-center">Жогорку Кенеш</span></button>
+            </a>
+        </div>
+
+        <div class="col-md-5"> 
+            <a href="{% url 'person:mestnyi_kenesh' %}">
+                <img src="{% static 'images/mestnyi.jpg'%}">
+                <button class="btn btn-success form-control" style="border-radius:0; background-color:#1cbbb4;"><span class="text-center">Местный Кенеш</span></button>
+            </a>
+        </div>
+    </div>
+  </div>
+  <br><br><br>
+    <section class="container">
+    <div class="constrain">
+      <div class="tile-widgets" id="js-tile-widgets">
+          
+          
+<div class="row">      
+{% for promis in promises %} 
+
+<div class="cell">    
+<div class="tw-block">
+  <span class="status status-actually">
+    Обещание
+  </span>
+      <div class="tw-block-avatart">
+          <a href="{% url 'person:detailed_person' promis.person.id %}" class="avatar-circle avatar-circle_middle">
+            <img src="../../{{promis.person.photo}}" alt="Дональд Трамп" class="avatar-img">
+          </a>
+      </div>
+      <span class="tw-block-note">Фракция {{promis.person.party}}</span>
+      <a href="{% url 'promis:detailed_promis' promis.id %}" class="tw-block-title">
+          {{promis.title}}
+      </a>
+</div>
+</div>
+{% if forloop.counter|divisibleby:3 %}
+<div class="row"></div>
+{% endif %}
+{% endfor %}            
+</div>
+          
+        
+      </div><!-- class="tile-widgets" -->
+    </div><!-- class="constrain" -->
+  
+{% endblock %}

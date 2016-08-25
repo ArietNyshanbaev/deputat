@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{%load staticfiles%}
+{% block content %}
+
+    <section class="container">
+      
+        <div class="header__block mb20">
+          
+        </div>
+      
+        <br><br><br>
+
+      
+  <div class="constrain">
+    <div class="mini-head">
+      <span class="mini-head__title">обещание</span>
+    </div>
+    <div class="profile-status"></div>
+    <div class="profile-main mb25">
+      <div class="view">
+        <div class="avatar-circle avatar-circle_large">
+          <img src="../../{{promis.person.photo}}" alt="{{promis.person.first_name}} {{promis.person.last_name}}" class="avatar-img">
+        </div>
+        
+      </div>
+      <div class="info">
+        <span class="name">
+            {{promis.person.first_name}} {{promis.person.last_name}} {{promis.person.middle_name}}
+        </span>
+        <span class="org">
+           Фракция {{promis.person.party}}
+        </span>
+      </div>
+      <div class="statistic">
+        
+          
+            <div class="item tooltip-effect tooltip-effect-top">
+              {% if promis.promisrank_set.count > 0 %}
+              <span class="num white show">{{rank_persentage}}%</span>
+              <span class="text">рейтинг<br>доверия</span>
+              {% endif %}
+
+              <span class="tooltip-content">Рейтинг сформирован на основе голосования за каждое высказывание {{promis.person.first_name}}a {{promis.person.last_name}}a</span>
+              
+            </div>
+          
+        
+        
+        
+            <div class="item">
+              <span class="num white show">
+                {{positive_rank}}
+              </span>
+              <a class="btn_opacity-green">Пользователя<br>Верят</a>
+            </div>
+            <div class="item">
+              <span class="num white show">
+                {{negative_rank}}
+              </span> 
+              <a class="btn_opacity-green">Пользователя<br>Не верят</a>
+            </div>
+        
+      </div>
+    </div>
+  <div class="timeline timeline-actually">
+    <div class="timeline__container">
+        <div class="timeline__head">
+          <h1 class="timeline__title">{{promis.title}}</h1>
+          <div class="timeline__ctrl">
+            
+
+<div class="bvote bvote_horz">
+        <div class="bvote__action">
+                {% if my_rank %}
+                  {% if my_rank.positive %}
+                  <a  class="bvote-btn bvote-btn_believe" style="background-color:#d65858">
+                    <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i><span class="btn-text">Верю</span>
+                  </a>
+                <a href="{% url 'promis:not_believe' promis.id %}"  class="bvote-btn bvote-btn_bottom bvote-btn_not-believe">
+                    <i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i><span class="btn-text">Не верю</span>
+                </a>
+                  {% else %}
+                  <a href="{% url 'promis:believe' promis.id %}"  class="bvote-btn bvote-btn_believe">
+                    <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i><span class="btn-text">Верю</span>
+                </a>
+                <a class="bvote-btn bvote-btn_bottom bvote-btn_not-believe" style="background-color:#d65858">
+                    <i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i><span class="btn-text">Не верю</span>
+                </a>
+                  {% endif %}
+
+                {% else %}
+
+                <a href="{% url 'promis:believe' promis.id %}"  class="bvote-btn bvote-btn_believe">
+                    <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i><span class="btn-text">Верю</span>
+                </a>
+                <a href="{% url 'promis:not_believe' promis.id %}"  class="bvote-btn bvote-btn_bottom bvote-btn_not-believe">
+                    <i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i><span class="btn-text">Не верю</span>
+                </a>
+                {% endif %}
+            
+        </div>
+        <div style="display:none;">
+            <input class="js_vote_sum_votes_plus_one" value="19">
+            <input class="js_vote_yes" value="8">
+        </div>
+    
+</div>
+
+          </div>
+          <div class="timeline__event">
+            <span class="timeline__date">{{promis.date.date|date:"c"}}</span>
+            <span class="status">Дата обещания</span>
+          </div>
+        </div>
+        <div class="normalize">
+          <p>{{promis.body}}</p>
+        </div>
+      
+        
+        
+          
+              <div class="timeline__status timeline__status-refuse ">
+                <div class="timeline__event">
+                  <span class="timeline__date">23.08.2016</span>
+                  
+                    <span class="status">Активно</span>
+                  
+                </div>
+                <a data-toggle="modal" data-target="#ResultModal" class="btn js-popupwin">подвести итог</a>
+              </div>
+
+          
+          
+        
+      
+        
+        
+          
+          
+            <div class="timeline__status timeline__status-final timeline__status-last">
+              <div class="timeline__event">
+                <span class="timeline__date">{{promis.deadline.date|date:"c"}}</span>
+                <span class="status">Срок до</span>
+              </div>
+            </div>
+          
+        
+      
+    </div>
+  </div>
+
+  <div class="clearfix">
+    
+    
+   <!--     
+
+<script type="text/javascript">
+    window.onload = function()
+    {
+        window.share = new Share (
+                        "http://www.obeschania.ru/documents/promises/tureckij-potok-erdogan",
+                        "Оплатим строительство половины Турецкого потока",
+                        "http://www.obeschania.ru",
+                        "Турция готова оплатить половину расходов на&nbsp;строительство сухопутной части газопровода Турецкий поток, об этом заявил президент страны Реджеп Эрдоган после&nbsp;встречи с Владимиром Путиным.&nbsp;России это позволит сэкономить более 2,2 млрд евро.Мы сообщили, ..."
+                        );
+    };
+</script>
+
+
+<div class="share-btn right">
+    <span class="share-title">Поделиться ссылкой <br>на эту тему с друзьями:</span>
+    <a onclick="share.vk();" class="share-link share-link_vk sharing_action" data-url="/gamification/share/document/13855/"></a>
+    <a onclick="share.fb();" class="share-link share-link_fb sharing_action" data-url="/gamification/share/document/13855/"></a>
+    <a onclick="share.tw();" class="share-link share-link_tw sharing_action" data-url="/gamification/share/document/13855/"></a>
+</div>-->
+      <a data-toggle="modal" data-target="#LinkModal" class="source-link">Источник</a>
+  </div>  
+    <div class="comments" id="comments">
+  <div class="comment-create comments-field">
+
+
+
+{% if user.is_authenticated %}
+<form action="" method="POST">
+  <input type="hidden" name="content_type" value="38" id="id_content_type">
+  <input type="hidden" name="object_id" value="13855" id="id_object_id">
+  <input type="hidden" name="parent_comment" id="id_parent_comment">
+  <div class="comments-item">
+    
+      <a href="" class="comments-item__avatar" title="Ariet Begeldinov">
+        <img src="" alt="Ariet Begeldinov" class="avatar">
+      </a>
+    
+    <div class="comments-item__info">
+      <div class="comments-item__form">
+        <textarea rows="3" name="content" placeholder="Говорите!" cols="40" id="id_content"></textarea>
+      
+        <input type="submit" value="Отправить" class="btn">
+      
+      </div>
+      
+
+      <div class="comments-item__checkboxes">
+        <div class="comments-item__checkbox">
+          <input id="id_receive_answers" checked="checked" type="checkbox" name="receive_answers" class="checkbox-small">
+          <span class="text">Присылать мне ответы на мой комментарий</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endif %}
+
+  </div>
+
+  <div class="comments-list">
+  
+  </div>
+
+
+</div>
+
+
+  
+
+  </div><!-- class="constrain" -->
+
+
+<!-- ============== START MODAL PAGES ================= -->
+
+<!-- LINK MODAL PAGE -->
+<div class="modal fade" id="LinkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+<div class="popup popup-source " id="js-source-popup" style="display: block;">
+    <a href="javascript:$.fancybox.close();" class="popup-close"></a>
+    <div class="popup__content">
+      <div class="mini-head">
+        <span class="mini-head__title">источник</span>
+      </div>
+      
+        <p class="text">{{promis.title}}</p>
+      
+      
+        <a href="{{promis.link}}" class="link" target="_blank">{{promis.link}}</a>
+      
+      <div class="clearfix"></div>
+      
+        <img src="../../{{promis.screenshot}}">
+      
+      
+      
+    </div>
+  </div>
+    </div>
+  </div>
+
+<!-- RESULT IN MODAL PAGE -->
+<div class="modal fade" id="ResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+  <div class="js-submit-form">
+      <div class="popup__head popup__head_large">
+        <span class="main-title uppercase">подвести итог</span>
+      </div>
+      <div class="popup__content">
+        <div class="form-sumup fields-small">
+          <form action="{% url 'promis:add_result' %}" method="POST">
+          {% csrf_token %}
+            <input type="hidden" name="promis_id" value="{{promis.id}}">
+            <div class="form-sumup__fields">
+              <div class="field">
+                <textarea id="id_content" rows="10" placeholder="Текст" cols="40" name="content"></textarea>
+                
+              </div>
+              <div class="field">
+                <span class="ttl mb15">Подтверждением выполнения или невыполнения обещания является:</span>
+                <ul class="list-left-point">
+                  <li class="item">Ссылка на общедоступную информацию в Сети.
+                  </li><li class="item">Фотоматериалы и видеоматериалы, подтверждающие присылаемую информацию.</li>
+                </ul>
+                <!--<span class="text mb35">Вся присланная информация проходит редакционную проверку, в случае публикации или отклонения информации вам придет уведомление на ваш e-mail.</span>-->
+              </div>
+            </div>
+            <div>
+              <input type="submit" value="Отправить" class="btn btn_max btn_supper">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+
+{% endblock %}

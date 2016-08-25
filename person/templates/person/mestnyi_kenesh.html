@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{%load staticfiles%}
+{% block content %}
+
+
+    <section class="container">
+      
+        <div class="header__block mb20">
+          
+        </div>
+      
+      
+      
+  <div class="constrain">
+    <div class="mini-head">
+      <span style="color:#1cbbb4; display:inline-block" class="mini-head__title">фракция {{active_party.title}}</span>
+      <span class="mini-head__title" style="float:right; display:inline-block">Местный Кенеш </span>
+    </div>
+    <div class="wfilter">
+    <div class="list-group">
+        {% for party in parties %}
+          {% if party == active_party %}
+            <a href="{% url 'person:mestnyi_kenesh' party.id %}" class="list-group-item" style="background-color:#1cbbb4;">{{party}}</a>
+          {% else %}
+            <a href="{% url 'person:mestnyi_kenesh' party.id %}" class="list-group-item">{{party}}</a>
+          {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+    <div class="content content-right text-center" id="object_list" >
+      <img height="150" class="text-center" src="../../{{active_party.logo}}">
+          <hr>
+    </div>
+    <div class="content content-right" id="object_list">
+      <ul class="filter-persons">
+          
+          {% for person in persons %}
+          <li class="item">
+            <a href="" class="link">
+              <div class="wrap">
+                <img src=" ../../{{person.photo}}" alt="{{person}}" class="img">
+                <div class="statistic">
+                  <div class="row mb15">
+                    <span class="text">Выполненные<br> обещания</span>
+                    <span class="num">0</span>
+                  </div>                      
+                
+                  <div class="row mb15">
+                    <span class="text">Невыполненные<br> обещания</span>
+                    <span class="num">0</span>
+                  </div>
+
+                  <div class="row">
+                    <span class="text fs12">РЕЙТИНГ<br> ДОВЕРИЯ</span>
+                    <span class="num">20%</span>
+                  </div>
+                </div>
+              </div>
+              <span class="name">{{person.last_name}} {{person.first_name}} {{person.middle_name}}</span>
+            </a>
+          </li>
+          {% endfor %}
+      </ul>
+</div>
+  </div><!-- class="constrain" -->
+  
+{% endblock %}

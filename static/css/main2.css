@@ -1,0 +1,79 @@
+body {
+	min-width: 320px;
+	position: relative;
+	line-height: 1.6;
+	font-family: "RobotoRegular", sans-serif;
+	overflow-x: hidden;
+	background:#e6e6e6;
+}
+
+a {text-decoration:none;color:#0f78c2;}
+a:hover {text-decoration:underline;}
+li {list-style:none;}
+
+.left .item,.right .item {background:#fff;border:1px solid #cfcfcf;overflow:hidden;border-radius:0 10px 0 10px;-moz-border-radius:0 10px 0 10px;box-sizing: border-box;padding:20px;margin:0 0 10px 0;}
+.left .item .image,.right .item .image {float:left; width:132px;margin:0 10px 10px 0;}
+.left .item .image img,.right .item .image img {width:100%;}
+.left .item .message div,.right .item .message div {font-family: "RobotoBold", sans-serif;font-size: 0.98em;color:#383431;border-bottom:1px solid #efefef;padding:0 0 13px 0;margin:0 0 5px 0;}
+.left .item .message div a,.right .item .message div a {color:#383431;}
+.left .title,.right .title {background:url(/images/title.png) repeat-x 0 21px;font-size: 1.8em;color:#a72626;text-align:center;padding:0 0 10px 0;}
+.right .title {color:#0f78c2;}
+.left .title div,.right .title div {background:#e6e6e6;display:inline-block;padding:0 15px;}
+
+
+.center .item-osnova {background:#fff;border:1px solid #cfcfcf;border-radius:0 10px 0 10px;-moz-border-radius:0 10px 0 10px;margin:0 0 10px 0;}
+.center .item-osnova .content {padding:20px;overflow:hidden;}
+.center .item-osnova .name {font-size: 1.3em; font-family: "RobotoBold", sans-serif;padding:0 0 15px 0;}
+.center .item-osnova .name a {color:#383431;}
+.center .item-osnova .image {float:left;margin:0 10px 10px 0; width:141px;}
+
+.center .item-osnova .image-main {float:left;margin:0 10px 10px 0; width:200px;}
+.center .item-osnova .image-main img{width:100%;vertical-align:top;}
+
+.center .item-osnova .image img {width:100%;vertical-align:bottom;}
+
+.center .item-osnova .message .date {color:#bdbdbd;}
+.center .item-osnova .message .text {line-height:22px;padding:6px 0 8px 0;border-bottom:1px solid #efefef;margin:0 0 7px 0;}
+.center .item-osnova .soc {overflow:hidden;background:#0f78c2;border-radius:0 0 0 10px;-moz-border-radius:0 0 0 10px;padding:8px 0;text-align:center;color:#fff;}
+.center .item-osnova .soc span.title {
+	display:block;
+	float: left;
+	margin-top: 8px;
+}
+
+.center .item-osnova .soc .inner {
+	width: 272px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.center .item-osnova .soc a {display:inline-block;vertical-align:middle;margin:0 4px;}
+.center .item-osnova .soc a img {vertical-align:bottom;}
+
+.center .item-middle {background:#fff;border:1px solid #cfcfcf;border-radius:0 10px 0 10px;-moz-border-radius:0 10px 0 10px;margin:0 0 10px 0;padding:25px 20px;}
+.center .item-middle .name {
+	font-size: 1.0em;
+	font-family: "RobotoBold", sans-serif;
+	padding: 0 0 13px;
+	margin: 0 0 5px;
+	border-bottom: 1px solid #EFEFEF;
+}
+.center .item-middle .name a {color:#383431;}
+.center .item-middle .image {width:141px;float:left;margin:0 10px 10px 0;}
+.center .item-middle .image img {width:100%;vertical-align:bottom;}
+.center .item-middle .message .date {color:#bdbdbd;border-bottom:1px solid #efefef;padding:0 0 10px 0;margin: 0 0 6px 0;}
+.center .item-middle .message .text {line-height:22px;padding:6px 0 8px 0;border-bottom:1px solid #efefef;margin:0 0 7px 0;}
+
+.center .item-middle::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.ajax-loading {
+    width: 16px;
+    height: 16px;
+    margin: 10px auto;
+    background: url(/images/loading.gif) no-repeat center center;
+	background-color: transparent;
+}
