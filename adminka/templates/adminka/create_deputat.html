@@ -1,0 +1,83 @@
+﻿{%load staticfiles%}
+      <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Admin Deputat.KG</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="{% static 'adminka/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+        <!-- Font Awesome CSS -->
+        <link href="{% static 'adminka/css/font-awesome.min.css' %}" rel="stylesheet">
+        <!-- Custom CSS -->
+
+        <!-- Custom Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+        <!-- Template js -->
+        <script src="{% static 'adminka/js/jquery-2.1.1.min.js' %}"></script>
+        <script src="{% static 'adminka/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'adminka/js/jquery.appear.js' %}"></script>
+        <script src="{% static 'adminka/js/jqBootstrapValidation.js' %}"></script>
+        <script src="{% static 'adminka/js/modernizr.custom.js' %}"></script>
+        <script src="{% static 'adminka/js/script.js' %}"></script>
+    </head>
+     <body>
+        {% include 'messages.html' %}
+        
+        <!-- Start Logo Section -->
+        <section id="logo-section" class="text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="logo text-center">
+                            <h1>Админ Панель</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <ol class="breadcrumb">
+              <li><a href="{% url 'adminka:main' %}"> Главная </a></li>
+              <li><a href="{% url 'adminka:deputats' %}"> Депутаты </a></li>
+              <li class="active"> Добавить депутата </li>
+            </ol>
+        </div>
+        <br><br>
+        
+        <!-- Start Main Body Section -->
+        <div class="mainbody-section text-center">
+
+            <div class="container">
+                <div class="row" style="color:white">
+                    <div class="col-md-10 col-md-offset-1" style="color:black;padding: 20px; border-radius:5px; border: solid black 4px">
+                    <form action="" method="POST" enctype="multipart/form-data" class="text-center black_label"  role="form" style="color:black">
+                    {% csrf_token %}
+                        {% for field in form %}
+                    <div class="form-group">
+                        {{field.label_tag}}
+                        <br>
+                        {% if field.errors %}
+                        <div class="alert alert-danger" role="alert">{{field.errors}}</div>
+                        {% endif %}
+                        {{field}}
+                    </div>
+                    {% endfor %}
+                    <div class="form-group">
+                                <br>
+                                <input type='submit' value='Сохранить' class="btn-sm btn-rounded btn btn-primary form-control" role="button">
+                            </div>
+                    </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+</html>

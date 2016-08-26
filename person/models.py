@@ -30,7 +30,7 @@ class Region(models.Model):
 	is_city = models.BooleanField('Город?')
 
 	def __unicode__(self):
-		return self.title + self.title
+		return self.title
 
 	class Meta:
 		verbose_name = "Район"

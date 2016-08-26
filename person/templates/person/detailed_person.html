@@ -20,21 +20,8 @@
     <div class="profile-main mb50">
       <div class="view">
         <div class="avatar-circle avatar-circle_large">
-          <img src="../../{{person.photo}}" alt="Путин Владимир" class="avatar-img">
+          <img src="../../{{person.photo}}" alt="{{person.first_name}} {{person.last_name}}" class="avatar-img">
         </div>
-        
-
-<div class="favorites-wrapper">
-
-    
-        <form action="http://www.obeschania.ru/favorites/" method="POST">
-            <div style="display:none"><input type="hidden" name="csrfmiddlewaretoken" value="215943b90aa7f9ea8450a83a06e649f9"></div>
-            <input type="hidden" name="app_label" value="persons" id="id_app_label"><input type="hidden" name="model" value="person" id="id_model"><input type="hidden" name="object_id" value="1" id="id_object_id">
-            <input type="submit" class="btn mb20" value="Следить">
-        </form>
-    
-
-</div>
 
       </div>
       <div class="info">
@@ -93,9 +80,22 @@
       <div class="wbiography mb40">
         <h2 class="block-title mb15">Биография {{person.last_name}} {{person.first_name}}</h2>
         <div class="text">
-          <p style="text-align: justify;">{{person.biography}}</p>
+        {% autoescape off %}
+          {{person.biography}}
+        {% endautoescape %}
         </div>
       </div>
+      <br><hr><br>
+      {% if person.estate %}
+      <div class="wbiography mb40">
+        <h2 class="block-title mb15">Имушество</h2>
+        <div class="text">
+        {% autoescape off %}
+          {{person.estate}}
+        {% endautoescape %}
+        </div>
+      </div>
+      {% endif %}
     
       <div class="profile__speech">
         

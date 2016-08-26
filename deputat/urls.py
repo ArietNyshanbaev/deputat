@@ -26,7 +26,6 @@ urlpatterns = [
     url(r'^adminka/', include('adminka.urls', namespace='adminka')),
     url(r'^promis/', include('promis.urls', namespace='promis')),
     url(r'^password_reset/', include('password_reset.urls')),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     # url(r'^forecast/', include('forecast.urls', namespace='forecast')),
 ]
 

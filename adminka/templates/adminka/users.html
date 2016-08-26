@@ -44,7 +44,7 @@
         <div class="container">
             <ol class="breadcrumb">
               <li><a href="{% url 'adminka:main' %}"> Главная </a></li>
-              <li class="active"> Депутаты </li>
+              <li class="active"> Пользователи </li>
             </ol>
         </div>
         <br><br>
@@ -54,33 +54,31 @@
 
             <div class="container">
                 <div class="row" style="color:white">
-                    <div class="col-md-10"></div>
-                    <div class="col-md-2 text-center">
-                        <a href="{% url 'adminka:create_deputat' %}"><button type="button" class="btn btn-info"> <i class="fa fa-plus" aria-hidden="true"></i> Добавить </button></a>
-                    </div>
-                    <div class="col-md-12" style="">
+                    <div class="col-md-8 col-md-2-offset" style="">
                         <table class="table" style="color:black">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Имя депутата</th> 
-                                    <th>Фамилия депутата</th> 
-                                    <th>Партия депутата</th> 
+                                    <th>Логин </th> 
+                                    <th>Email </th> 
                                     <th>Посмотреть</th>
                                     <th>Изменить</th>
                                     <th>Удалить</th>
                                 </tr> 
                             </thead>
                             <tbody> 
-                                {% for deputat in deputats %}
+                                {% for usr in users %}
                                     <tr>
                                         <th scope="row">{{forloop.counter}}</th> 
-                                        <td> {{deputat.first_name|slice:"16"}} </td> 
-                                        <td> {{deputat.last_name|slice:"20"}} </td> 
-                                        <td> {{deputat.party|slice:"20"}} </td>
+                                        <td> {{usr.username|slice:"16"}} </td> 
+                                        <td> {{usr.email|slice:"20"}} </td> 
                                         <td><a href="{% url 'person:detailed_person' deputat.pk %}" target="_blank">Посмотреть</a></td> 
-                                        <td><a href="{% url 'adminka:edit_deputat' deputat.id %}">Изменить</a></td> 
-                                        <td><a href="" data-toggle="modal" data-target="#deleteDeputat{{deputat.id}}" >Удалить</a></td> 
+                                        {% if usr.active %}
+                                        <td><a href="">Забанить</a></td> 
+                                        {% else %}
+                                        <td><a href="">Разбанить</a></td> 
+                                        {% endif %}
+                                        <td><a href="" data-toggle="modal" data-target="#deleteUser{{deputat.id}}" >Удалить</a></td> 
                                     </tr>
                                 {% endfor %}
                             </tbody> 
