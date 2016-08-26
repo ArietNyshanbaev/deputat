@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^', include('main.urls', namespace='main')),
     url(r'^auths/', include('auths.urls', namespace='auths')),
     url(r'^person/', include('person.urls', namespace='person')),
+    url(r'^adminka/', include('adminka.urls', namespace='adminka')),
     url(r'^promis/', include('promis.urls', namespace='promis')),
     url(r'^password_reset/', include('password_reset.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),

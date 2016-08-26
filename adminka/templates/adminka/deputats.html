@@ -1,0 +1,132 @@
+﻿{%load staticfiles%}
+      <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Admin Deputat.KG</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="{% static 'adminka/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+        <!-- Font Awesome CSS -->
+        <link href="{% static 'adminka/css/font-awesome.min.css' %}" rel="stylesheet">
+        <!-- Custom CSS -->
+
+        <!-- Custom Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+        <!-- Template js -->
+        <script src="{% static 'adminka/js/jquery-2.1.1.min.js' %}"></script>
+        <script src="{% static 'adminka/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'adminka/js/jquery.appear.js' %}"></script>
+        <script src="{% static 'adminka/js/contact_me.js' %}"></script>
+        <script src="{% static 'adminka/js/jqBootstrapValidation.js' %}"></script>
+        <script src="{% static 'adminka/js/modernizr.custom.js' %}"></script>
+        <script src="{% static 'adminka/js/script.js' %}"></script>
+    </head>
+     <body>
+        {% if messages %}
+            {% for message in messages %}
+              {% if message.tags == 'error' %}
+                  <div class="alert alert-danger fade in text-center">
+                      <a href="#" class="close" data-dismiss="alert">&times;</a>
+                      <h4><strong>{{message}}</strong></h4>
+                  </div>
+              {% else %}
+                <div class="alert alert-{{message.tags}} fade in text-center">
+                      <a href="#" class="close" data-dismiss="alert">&times;</a>
+                      <h4><strong>{{message}}</strong></h4>
+                  </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        
+        <!-- Start Logo Section -->
+        <section id="logo-section" class="text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="logo text-center">
+                            <h1>Админ Панель</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <ol class="breadcrumb">
+              <li><a href="{% url 'adminka:main' %}"> Главная </a></li>
+              <li class="active"> Депутаты </li>
+            </ol>
+        </div>
+        <br><br>
+        
+        <!-- Start Main Body Section -->
+        <div class="mainbody-section text-center">
+
+            <div class="container">
+                <div class="row" style="color:white">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2 text-center">
+                        <button type="button" class="btn btn-info"> <i class="fa fa-plus" aria-hidden="true"></i> Добавить </button>
+                    </div>
+                    <div class="col-md-12" style="">
+                        <table class="table" style="color:black">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Имя депутата</th> 
+                                    <th>Фамилия депутата</th> 
+                                    <th>Партия депутата</th> 
+                                    <th>Посмотреть</th>
+                                    <th>Изменить</th>
+                                    <th>Удалить</th>
+                                </tr> 
+                            </thead>
+                            <tbody> 
+                                {% for deputat in deputats %}
+                                    <tr>
+                                        <th scope="row">{{forloop.counter}}</th> 
+                                        <td> {{deputat.first_name|slice:"16"}} </td> 
+                                        <td> {{deputat.last_name|slice:"20"}} </td> 
+                                        <td> {{deputat.party|slice:"20"}} </td>
+                                        <td><a href="{% url 'person:detailed_person' deputat.pk %}" target="_blank">Посмотреть</a></td> 
+                                        <td><a href="">Изменить</a></td> 
+                                        <td><a style="cursor:pointer" data-toggle="modal" data-target="#deleteDeputat{{deputat.id}}" >Удалить</a></td> 
+                                    </tr>
+                                {% endfor %}
+                            </tbody> 
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+<!-- DELETE DEPUTAT MODAL PAGE -->
+{% for deputat in deputats %}
+
+<div class="modal fade" id="deleteDeputat{{deputat.id}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Вы действительно хотите удалить депутата  ?</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{deputat.first_name}} {{deputat.last_name}} {{deputat.middle_name}}. Паритя {{deputat.party}}.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        <a href="{% url 'adminka:delete_deputat' deputat.id %}"><button style="background-color:#ca4b2f" class="btn btn-primary"> Удалить </button></a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{% endfor %}
+
+    
+</html>
