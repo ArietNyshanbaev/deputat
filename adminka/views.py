@@ -79,4 +79,24 @@ def users(request):
 	template = 'adminka/users.html'
 	return render(request, template, args)
 
-def bann_user(request, user_id)
+def bann_user(request, user_id):
+	user = get_object_or_404(User, pk=user_id)
+	user.is_active = False
+	user.save()
+	messages.info(request, 'Вы забанили пользователя ' + user.username)
+	return redirect(reverse('adminka:users'))
+
+def disbann_user(request, user_id):
+	user = get_object_or_404(User, pk=user_id)
+	user.is_active = True
+	user.save()
+	messages.info(request, 'Вы разбанили пользователя ' + user.username)
+	return redirect(reverse('adminka:users'))
+
+def delete_user(request, user_id):
+	user = get_object_or_404(User, pk=user_id)
+	name = user.username
+	user.delete()
+	messages.info(request, 'Вы удалили пользователя ' + name)
+	return redirect(reverse('adminka:users'))
+

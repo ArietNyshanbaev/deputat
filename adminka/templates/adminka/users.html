@@ -54,14 +54,15 @@
 
             <div class="container">
                 <div class="row" style="color:white">
-                    <div class="col-md-8 col-md-2-offset" style="">
+                    <div class="col-md-8 col-md-offset-2" style="">
+                        <h4 class="text-center" style="color:black">Пользователи</h4>
+                        <hr>
                         <table class="table" style="color:black">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Логин </th> 
                                     <th>Email </th> 
-                                    <th>Посмотреть</th>
                                     <th>Изменить</th>
                                     <th>Удалить</th>
                                 </tr> 
@@ -72,13 +73,12 @@
                                         <th scope="row">{{forloop.counter}}</th> 
                                         <td> {{usr.username|slice:"16"}} </td> 
                                         <td> {{usr.email|slice:"20"}} </td> 
-                                        <td><a href="{% url 'person:detailed_person' deputat.pk %}" target="_blank">Посмотреть</a></td> 
-                                        {% if usr.active %}
-                                        <td><a href="">Забанить</a></td> 
+                                        {% if usr.is_active %}
+                                        <td><a href="{% url 'adminka:bann_user' usr.id %}">Забанить</a></td> 
                                         {% else %}
-                                        <td><a href="">Разбанить</a></td> 
+                                        <td><a href="{% url 'adminka:disbann_user' usr.id %}">Разбанить</a></td> 
                                         {% endif %}
-                                        <td><a href="" data-toggle="modal" data-target="#deleteUser{{deputat.id}}" >Удалить</a></td> 
+                                        <td><a href="" data-toggle="modal" data-target="#deleteUser{{usr.id}}" >Удалить</a></td> 
                                     </tr>
                                 {% endfor %}
                             </tbody> 
@@ -90,26 +90,21 @@
     </body>
 
 <!-- DELETE DEPUTAT MODAL PAGE -->
-{% for deputat in deputats %}
-
-<div class="modal fade" id="deleteDeputat{{deputat.id}}" tabindex="-1" role="dialog">
+{% for usr in users %}
+<div class="modal fade" id="deleteUser{{usr.id}}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Вы действительно хотите удалить депутата  ?</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{deputat.first_name}} {{deputat.last_name}} {{deputat.middle_name}}. Паритя {{deputat.party}}.</p>
+        <h4 class="modal-title">Вы действительно хотите удалить пользователя {{usr.username}}?</h4>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-        <a href="{% url 'adminka:delete_deputat' deputat.id %}"><button style="background-color:#ca4b2f" class="btn btn-primary"> Удалить </button></a>
+        <a href="{% url 'adminka:delete_user' usr.id %}"><button style="background-color:#ca4b2f" class="btn btn-primary"> Удалить </button></a>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 {% endfor %}
 
     
