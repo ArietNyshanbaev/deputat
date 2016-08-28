@@ -14,7 +14,7 @@ from django.utils.crypto import get_random_string
 from django.conf import settings
 from custom_code.decorators import email_required, logout_required
 # import of custom writen decorator and views
-from promis.models import Promis, Result
+from promis.models import Promis, Result, Comments
 from person.models import Person
 from .forms import PersonForm, NewsForm, PromisForm
 from news.models import News
@@ -192,3 +192,25 @@ def edit_promis(request, promis_id):
 	args['form'] = form
 	template = 'adminka/create_promis.html'
 	return render(request, template, args)
+
+def comments_of_promis(request, promis_id):
+	args = {}
+	promis = get_object_or_404(Promis, pk=promis_id)
+	args['comments'] = Comments.objects.filter(promis=promis)
+	template = 'adminka/comments_of_promis.html'
+	return render(request, template, args)
+
+def approve_comment(request, comment_id):
+	comment = get_object_or_404(Comments, pk=comment_id)
+	comment.is_approved = True
+	comment.save()
+	messages.info(request, 'Вы подтвердили комент :' + comment.content)
+	return redirect(reverse('adminka:comments_of_promis', kwargs={'promis_id': comment.promis.id}))
+
+def disapprove_comment(request, comment_id):
+	comment = get_object_or_404(Comments, pk=comment_id)
+	comment.is_approved = False
+	comment.save()
+	messages.info(request, 'Вы скрыли комент :' + comment.content)
+	return redirect(reverse('adminka:comments_of_promis', kwargs={'promis_id': comment.promis.id}))
+

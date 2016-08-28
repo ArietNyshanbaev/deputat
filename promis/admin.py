@@ -1,7 +1,7 @@
 ﻿# Импорт стандартных пакетов Django
 from django.contrib import admin
 # Импорт моделей из баззы данных
-from .models import Promis, PromisRank, Result
+from .models import Promis, PromisRank, Result, Comments
 
 class PromisAdmin(admin.ModelAdmin):
 	""" Класс Регистрации Админки для Клеинтов """
@@ -16,3 +16,5 @@ class PromisRankAdmin(admin.ModelAdmin):
 admin.site.register(PromisRank, PromisRankAdmin)
 
 admin.site.register(Result)
+
+admin.site.register(Comments)

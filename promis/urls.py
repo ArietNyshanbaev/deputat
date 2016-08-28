@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^not_done_promises$', 'promis.views.not_done_promises', name='not_done_promises'),
     url(r'^believe/(?P<promis_id>.+)$', 'promis.views.believe', name='believe'),
     url(r'^not_believe/(?P<promis_id>.+)$', 'promis.views.not_believe', name='not_believe'),
+    url(r'^add_comment/(?P<promis_id>.+)/(?P<comment_id>.+)$', 'promis.views.add_comment', name='add_comment'),
+    url(r'^add_comment/(?P<promis_id>.+)$', 'promis.views.add_comment', name='add_comment'),
 ]

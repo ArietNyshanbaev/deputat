@@ -3,7 +3,7 @@ from custom_code.decorators import email_required
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-from .models import Promis, Result, PromisRank
+from .models import Promis, Result, PromisRank, Comments
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse 
 
@@ -25,7 +25,8 @@ def detailed_promis(request, promis_id):
 	# initialize variables
 	args={}
 	promis = get_object_or_404(Promis, pk=promis_id)
-	
+	args['comments'] = Comments.objects.filter(promis=promis, comment=None, is_approved=True)
+	args['comments_all'] = Comments.objects.filter(promis=promis, is_approved=True)
 	args['promis'] = promis
 	args['positive_rank'] = PromisRank.objects.filter(promis=promis, positive=True).count()
 	args['negative_rank'] = PromisRank.objects.filter(promis=promis, positive=False).count()
@@ -97,5 +98,16 @@ def not_believe(request, promis_id):
 	messages.info(request, 'Спасибо, ваш голос учтен.')
 	return redirect(request.META.get('HTTP_REFERER'))
 
-
+@login_required(login_url=reverse_lazy('auths:signin'))
+@email_required 
+def add_comment(request, promis_id, comment_id=None):
+	promis = get_object_or_404(Promis, id=promis_id)
+	content = request.POST.get('content', '')
+	new_comment = Comments.objects.create(user=request.user,promis=promis, content=content )
+	if comment_id:
+		comment = get_object_or_404(Comments, id=comment_id)
+		new_comment.comment = comment
+		new_comment.save()
+	messages.info(request, 'Ваш комментарий будет отображаться как только пройдет модерацию.')
+	return redirect(reverse('promis:detailed_promis', kwargs={'promis_id':promis.id}))
 

@@ -128,15 +128,6 @@
                 </div>
                 <a data-toggle="modal" data-target="#ResultModal" class="btn js-popupwin">подвести итог</a>
               </div>
-
-          
-          
-        
-      
-        
-        
-          
-          
             <div class="timeline__status timeline__status-final timeline__status-last">
               <div class="timeline__event">
                 <span class="timeline__date">{{promis.deadline.date|date:"c"}}</span>
@@ -181,32 +172,39 @@
 
 
 {% if user.is_authenticated %}
-<form action="" method="POST">
-  <input type="hidden" name="content_type" value="38" id="id_content_type">
-  <input type="hidden" name="object_id" value="13855" id="id_object_id">
-  <input type="hidden" name="parent_comment" id="id_parent_comment">
+<form action="{% url 'promis:add_comment' promis.id %}" method="POST">
+{% csrf_token %}
   <div class="comments-item">
     
-      <a href="" class="comments-item__avatar" title="Ariet Begeldinov">
-        <img src="" alt="Ariet Begeldinov" class="avatar">
+      <a href="" class="comments-item__avatar">
+        <p> {{user.username}} </p>
       </a>
     
-    <div class="comments-item__info">
+    <div class="comments-item__info text-center">
       <div class="comments-item__form">
-        <textarea rows="3" name="content" placeholder="Говорите!" cols="40" id="id_content"></textarea>
-      
-        <input type="submit" value="Отправить" class="btn">
-      
+        <textarea rows="3" name="content" class="form-control" placeholder="Говорите!" cols="40" id="id_content"></textarea>
       </div>
-      
-
-      <div class="comments-item__checkboxes">
-        <div class="comments-item__checkbox">
-          <input id="id_receive_answers" checked="checked" type="checkbox" name="receive_answers" class="checkbox-small">
-          <span class="text">Присылать мне ответы на мой комментарий</span>
-        </div>
-      </div>
-    </div>
+      <br>
+      <input type="submit" value="Отправить" class="btn-primary text-center" style="
+                                        display: inline-block;
+                                        padding: 6px 12px;
+                                        margin-bottom: 0;
+                                        font-size: 14px;
+                                        font-weight: 400;
+                                        line-height: 1.42857143;
+                                        text-align: center;
+                                        white-space: nowrap;
+                                        vertical-align: middle;
+                                        -ms-touch-action: manipulation;
+                                        touch-action: manipulation;
+                                        cursor: pointer;
+                                        -webkit-user-select: none;
+                                        -moz-user-select: none;
+                                        -ms-user-select: none;
+                                        user-select: none;
+                                        background-image: none;
+                                        border: 1px solid transparent;
+                                        border-radius: 4px;">
   </div>
 </form>
 {% endif %}
@@ -214,7 +212,61 @@
   </div>
 
   <div class="comments-list">
-  
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-10">
+    {% for comment in comments %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>{{comment.user.username}}</strong> <span class="text-muted " style="float:right">{{comment.date}}</span>
+        </div>
+        <div class="panel-body">
+          {{comment.content}}
+          <hr>
+          <a data-toggle="modal" data-target="#commentModal{{comment.id}}">Ответить</a>
+        </div><!-- /panel-body -->
+      </div>
+
+      {% for comment in comment.comments_set.all %}
+      <div class="panel panel-default" style="margin-left:50px">
+        <div class="panel-heading">
+          <strong>{{comment.user.username}}</strong> <span class="text-muted " style="float:right">{{comment.date}}</span>
+        </div>
+        <div class="panel-body">
+          {{comment.content}} 
+          <hr>
+          <a data-toggle="modal" data-target="#commentModal{{comment.id}}">Ответить</a>
+        </div><!-- /panel-body -->
+      </div>
+      {% for comment in comment.comments_set.all %}
+      <div class="panel panel-default" style="margin-left:100px">
+        <div class="panel-heading">
+          <strong>{{comment.user.username}}</strong> <span class="text-muted " style="float:right">{{comment.date}}</span>
+        </div>
+        <div class="panel-body">
+          {{comment.content}} 
+          <hr>
+        </div><!-- /panel-body -->
+      </div>
+      {% endfor %}
+      {% endfor %}
+
+    {% endfor %}
+    </div>   
+  </div><!-- /row -->
+</div><!-- /container -->
+
+
+
+
+
+
+  </div>
+
   </div>
 
 
@@ -240,15 +292,10 @@
       
         <p class="text">{{promis.title}}</p>
       
-      
         <a href="{{promis.link}}" class="link" target="_blank">{{promis.link}}</a>
       
       <div class="clearfix"></div>
-      
         <img src="../../{{promis.screenshot}}">
-      
-      
-      
     </div>
   </div>
     </div>
@@ -278,7 +325,6 @@
                   <li class="item">Ссылка на общедоступную информацию в Сети.
                   </li><li class="item">Фотоматериалы и видеоматериалы, подтверждающие присылаемую информацию.</li>
                 </ul>
-                <!--<span class="text mb35">Вся присланная информация проходит редакционную проверку, в случае публикации или отклонения информации вам придет уведомление на ваш e-mail.</span>-->
               </div>
             </div>
             <div>
@@ -291,10 +337,36 @@
     </div>
   </div>
 </div>
-
-
-
 </div>
 
-
+{% for comment in comments_all %}
+<div class="modal fade" id="commentModal{{comment.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+  <div class="js-submit-form">
+      <div class="popup__head popup__head_large">
+        <span class="main-title uppercase">Ответить на комментарий</span>
+      </div>
+      <div class="popup__content">
+      <p>{{comment.content}}</p>
+      <hr>
+        <div class="form-sumup fields-small">
+          <form action="{% url 'promis:add_comment' promis.id comment.id %}" method="POST">
+          {% csrf_token %}
+            <div class="form-sumup__fields">
+              <div class="field">
+                <textarea id="id_content" rows="10" placeholder="Говорите!" cols="40" name="content"></textarea>
+              </div>
+            </div>
+            <div>
+              <input type="submit" value="Отправить" class="btn btn_max btn_supper">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
 {% endblock %}

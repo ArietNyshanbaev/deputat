@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -127,6 +128,9 @@ STATIC_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
 STATIC_ROOT = os.path.join(BASE_DIR,'static-root')
+
+SITE_ID = 1
+
 CKEDITOR_UPLOAD_PATH = os.path.join(BASE_DIR,'ckeditor-files')
 
 CKEDITOR_CONFIGS = {

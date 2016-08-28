@@ -22,4 +22,10 @@ urlpatterns = [
     url(r'^promises/delete_promis/(?P<promis_id>.+)$', 'adminka.views.delete_promis', name='delete_promis'),
     url(r'^promises/create_promis$', 'adminka.views.create_promis', name='create_promis'),
     url(r'^promises/edit_promis/(?P<promis_id>.+)$', 'adminka.views.edit_promis', name='edit_promis'),
+    # Routes to comments section of Adminka module
+    url(r'^comments_of_promis/(?P<promis_id>.+)$', 'adminka.views.comments_of_promis', name='comments_of_promis'),
+    url(r'^approve_comment/(?P<comment_id>.+)$', 'adminka.views.approve_comment', name='approve_comment'),
+    url(r'^disapprove_comment/(?P<comment_id>.+)$', 'adminka.views.disapprove_comment', name='disapprove_comment'),
+    
+
 ]

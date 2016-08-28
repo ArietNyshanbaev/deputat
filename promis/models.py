@@ -57,3 +57,22 @@ class Result(models.Model):
 	class Meta:
 		verbose_name = "Результат"
 		verbose_name_plural = "Результаты"
+
+class Comments(models.Model):
+	""" Класс для хранения Коментариев Обещаний """
+
+	user = models.ForeignKey(User, verbose_name='Пользователь')
+	promis = models.ForeignKey(Promis, verbose_name='Принадлежит к Обещанию')
+	comment = models.ForeignKey('self', null=True, blank=True)
+	date = models.DateTimeField(default=datetime.now())
+	content = models.TextField('Контент')
+	is_approved = models.BooleanField('Потвержден?', default=False)
+
+	def __unicode__(self):
+		return str(self.content)
+
+	class Meta:
+		verbose_name = "Коментарий"
+		verbose_name_plural = "Коментарии"
+
+
