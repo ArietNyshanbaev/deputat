@@ -16,7 +16,8 @@ from custom_code.decorators import email_required, logout_required
 # import of custom writen decorator and views
 from promis.models import Promis, Result
 from person.models import Person
-from .forms import PersonForm
+from .forms import PersonForm, NewsForm, PromisForm
+from news.models import News
 
 def main(request):
 	args = {}
@@ -45,12 +46,9 @@ def create_deputat(request):
 	if request.POST:
 		form = PersonForm(request.POST, request.FILES)
 		if form.is_valid() :
-			deputat = form.save(commit=False)
-			photo = request.FILES.get('photo', '')
-			deputat.photo = photo
-			deputat.save()
+			deputat = form.save()
 			name = deputat.first_name + ' ' + deputat.last_name
-			messages.info(request, 'Депутат ' + name + ' успешно удален. ')
+			messages.info(request, 'Депутат ' + name + ' успешно создан. ')
 			return redirect(reverse('adminka:deputats'))
 	args['form'] = form
 	template = 'adminka/create_deputat.html'
@@ -61,7 +59,7 @@ def edit_deputat(request, deputat_id):
 	args.update(csrf(request))
 	instance = get_object_or_404(Person, id=deputat_id)
 	if request.method == 'POST':
-		form = PersonForm(data=request.POST, instance=instance)
+		form = PersonForm(request.POST, request.FILES, instance=instance)
 		if form.is_valid() :
 			deputat = form.save()
 			name = deputat.first_name + ' ' + deputat.last_name
@@ -100,3 +98,97 @@ def delete_user(request, user_id):
 	messages.info(request, 'Вы удалили пользователя ' + name)
 	return redirect(reverse('adminka:users'))
 
+def news(request):
+	args = {}
+	args['newses'] = News.objects.all()
+	template = 'adminka/news.html'
+	return render(request, template, args)
+
+def delete_news(request, news_id):
+	news = get_object_or_404(News, id=news_id)
+	title = news.title
+	news.delete()
+	messages.info(request, 'Вы удалили новость ' + title)
+	template = 'adminka/delete_news.html'
+	return redirect(reverse('adminka:news'))
+
+def create_news(request):
+	args = {}
+	args.update(csrf(request))
+	form = NewsForm()
+
+	if request.POST:
+		form = NewsForm(request.POST, request.FILES)
+		if form.is_valid() :
+			news = form.save()
+			title = news.title
+			messages.info(request, 'Новость ' + title + ' успешно создана. ')
+			return redirect(reverse('adminka:news'))
+	args['form'] = form
+	template = 'adminka/create_news.html'
+	return render(request, template, args)
+
+def edit_news(request, news_id):
+	args = {}
+	args.update(csrf(request))
+	instance = get_object_or_404(News, id=news_id)
+	if request.method == 'POST':
+		form = NewsForm(request.POST, request.FILES, instance=instance)
+		if form.is_valid() :
+			news = form.save()
+			title = news.title
+			messages.info(request, 'Новость ' + title + ' успешно изменен. ')
+			return redirect(reverse('news:detailed_news', kwargs={'news_id':news.id}))
+	else:
+		form = NewsForm(instance=instance)
+	args['form'] = form
+	template = 'adminka/create_news.html'
+	return render(request, template, args)
+
+def promises(request):
+	args = {}
+	args['promises'] = Promis.objects.all()
+	template = 'adminka/promises.html'
+	return render(request, template, args)
+
+def delete_promis(request, promis_id):
+	promis = get_object_or_404(Promis, id=promis_id)
+	title = promis.title
+	promis.delete()
+	messages.info(request, 'Вы удалили обещание ' + title)
+	return redirect(reverse('adminka:promises'))
+
+def create_promis(request):
+	args = {}
+	args.update(csrf(request))
+	form = PromisForm()
+
+	if request.POST:
+		form = PromisForm(request.POST, request.FILES)
+		if form.is_valid() :
+			promis = form.save(commit=False)
+			promis.user = request.user
+			promis.save()
+			title = promis.title
+			messages.info(request, 'Обещание ' + title + ' успешно создана. ')
+			return redirect(reverse('adminka:promises'))
+	args['form'] = form
+	template = 'adminka/create_promis.html'
+	return render(request, template, args)
+
+def edit_promis(request, promis_id):
+	args = {}
+	args.update(csrf(request))
+	instance = get_object_or_404(Promis, id=promis_id)
+	if request.method == 'POST':
+		form = PromisForm(request.POST, request.FILES, instance=instance)
+		if form.is_valid() :
+			promis = form.save()
+			title = promis.title
+			messages.info(request, 'Обещание ' + title + ' успешно изменена. ')
+			return redirect(reverse('promis:detailed_promis', kwargs={'promis_id':promis.id}))
+	else:
+		form = PromisForm(instance=instance)
+	args['form'] = form
+	template = 'adminka/create_promis.html'
+	return render(request, template, args)

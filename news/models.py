@@ -10,7 +10,7 @@ class News(models.Model):
 	""" Класс для хранения Обещаний """
 	title = models.CharField('Заголовок', max_length=200, null=True, blank=True)
 	body = models.TextField('Тело' )
-	date = models.DateTimeField('Дата', null=True, blank=True )
+	date = models.DateTimeField('Дата', null=True, blank=True, auto_now_add=True )
 	photo = models.ImageField('Фото', upload_to='media/news', null=True, blank=True)
 
 	def __unicode__(self):
