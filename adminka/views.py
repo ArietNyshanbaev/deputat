@@ -16,8 +16,9 @@ from custom_code.decorators import email_required, logout_required
 # import of custom writen decorator and views
 from promis.models import Promis, Result, Comments
 from person.models import Person
-from .forms import PersonForm, NewsForm, PromisForm
-from news.models import News
+from .forms import PersonForm, NewsForm, PromisForm, ForecastForm
+from news.models import News, NewsComment
+from forecast.models import Forecast, ForecastComment
 
 def main(request):
 	args = {}
@@ -109,7 +110,6 @@ def delete_news(request, news_id):
 	title = news.title
 	news.delete()
 	messages.info(request, 'Вы удалили новость ' + title)
-	template = 'adminka/delete_news.html'
 	return redirect(reverse('adminka:news'))
 
 def create_news(request):
@@ -144,6 +144,55 @@ def edit_news(request, news_id):
 	args['form'] = form
 	template = 'adminka/create_news.html'
 	return render(request, template, args)
+
+def forecasts(request):
+	args = {}
+	args['forecasts'] = Forecast.objects.all()
+	template = 'adminka/forecasts.html'
+	return render(request, template, args)
+
+def delete_forecast(request, forecast_id):
+	forecast = get_object_or_404(Forecast, id=forecast_id)
+	title = forecast.title
+	forecast.delete()
+	messages.info(request, 'Вы удалили мнение ' + title)
+	return redirect(reverse('adminka:forecasts'))
+
+def create_forecast(request):
+	args = {}
+	args.update(csrf(request))
+	form = ForecastForm()
+
+	if request.POST:
+		form = ForecastForm(request.POST, request.FILES)
+		if form.is_valid() :
+			forecast = form.save(commit=False)
+			forecast.user = request.user
+			forecast.save()
+			title = forecast.title
+			messages.info(request, 'Мнение ' + title + ' успешно создана. ')
+			return redirect(reverse('adminka:forecasts'))
+	args['form'] = form
+	template = 'adminka/create_forecast.html'
+	return render(request, template, args)
+
+def edit_forecast(request, forecast_id):
+	args = {}
+	args.update(csrf(request))
+	instance = get_object_or_404(Forecast, id=forecast_id)
+	if request.method == 'POST':
+		form = ForecastForm(request.POST, request.FILES, instance=instance)
+		if form.is_valid() :
+			forecast = form.save()
+			title = forecast.title
+			messages.info(request, 'Новость ' + title + ' успешно изменен. ')
+			return redirect(reverse('forecast:detailed_forecast', kwargs={'forecast_id':forecast.id}))
+	else:
+		form = ForecastForm(instance=instance)
+	args['form'] = form
+	template = 'adminka/create_forecast.html'
+	return render(request, template, args)
+
 
 def promises(request):
 	args = {}
@@ -214,3 +263,44 @@ def disapprove_comment(request, comment_id):
 	messages.info(request, 'Вы скрыли комент :' + comment.content)
 	return redirect(reverse('adminka:comments_of_promis', kwargs={'promis_id': comment.promis.id}))
 
+def comments_of_news(request, news_id):
+	args = {}
+	news = get_object_or_404(News, pk=news_id)
+	args['comments'] = NewsComment.objects.filter(news=news)
+	template = 'adminka/comments_of_news.html'
+	return render(request, template, args)
+
+def approve_comment_news(request, comment_id):
+	comment = get_object_or_404(NewsComment, pk=comment_id)
+	comment.is_approved = True
+	comment.save()
+	messages.info(request, 'Вы подтвердили комент :' + comment.content)
+	return redirect(reverse('adminka:comments_of_news', kwargs={'news_id': comment.news.id}))
+
+def disapprove_comment_news(request, comment_id):
+	comment = get_object_or_404(NewsComment, pk=comment_id)
+	comment.is_approved = False
+	comment.save()
+	messages.info(request, 'Вы скрыли комент :' + comment.content)
+	return redirect(reverse('adminka:comments_of_news', kwargs={'news_id': comment.news.id}))
+
+def comments_of_forecast(request, forecast_id):
+	args = {}
+	forecast = get_object_or_404(Forecast, pk=forecast_id)
+	args['comments'] = ForecastComment.objects.filter(forecast=forecast)
+	template = 'adminka/comments_of_forecast.html'
+	return render(request, template, args)
+
+def approve_comment_forecast(request, comment_id):
+	comment = get_object_or_404(ForecastComment, pk=comment_id)
+	comment.is_approved = True
+	comment.save()
+	messages.info(request, 'Вы подтвердили комент :' + comment.content)
+	return redirect(reverse('adminka:comments_of_forecast', kwargs={'forecast_id': comment.forecast.id}))
+
+def disapprove_comment_forecast(request, comment_id):
+	comment = get_object_or_404(ForecastComment, pk=comment_id)
+	comment.is_approved = False
+	comment.save()
+	messages.info(request, 'Вы скрыли комент :' + comment.content)
+	return redirect(reverse('adminka:comments_of_forecast', kwargs={'forecast_id': comment.forecast.id}))

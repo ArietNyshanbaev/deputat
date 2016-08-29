@@ -20,7 +20,6 @@
         <script src="{% static 'adminka/js/jquery-2.1.1.min.js' %}"></script>
         <script src="{% static 'adminka/bootstrap/js/bootstrap.min.js' %}"></script>
         <script src="{% static 'adminka/js/jquery.appear.js' %}"></script>
-        <script src="{% static 'adminka/js/contact_me.js' %}"></script>
         <script src="{% static 'adminka/js/jqBootstrapValidation.js' %}"></script>
         <script src="{% static 'adminka/js/modernizr.custom.js' %}"></script>
         <script src="{% static 'adminka/js/script.js' %}"></script>
@@ -40,53 +39,43 @@
                 </div>
             </div>
         </section>
-
         <div class="container">
             <ol class="breadcrumb">
               <li><a href="{% url 'adminka:main' %}"> Главная </a></li>
-              <li><a href="{% url 'adminka:promises' %}">  Обещания  </a></li>
-              <li class="active">Коменты </li>
+              <li><a href="{% url 'adminka:forecasts' %}"> Мнения </a></li>
+              <li class="active"> Добавить/Изменить мнение </li>
             </ol>
         </div>
         <br><br>
         
         <!-- Start Main Body Section -->
         <div class="mainbody-section text-center">
-
             <div class="container">
                 <div class="row" style="color:white">
-                    <div class="col-md-8 col-md-offset-2" style="">
-                        <h4 class="text-center" style="color:black">Коменты</h4>
-                        <hr>
-                        <table class="table" style="color:black">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Пользователь</th> 
-                                    <th>Комментарий</th> 
-                                    <th>Дата</th>
-                                    <th>Изменить</th>
-                                </tr> 
-                            </thead>
-                            <tbody> 
-                                {% for comment in comments %}
-                                    <tr>
-                                        <th scope="row">{{forloop.counter}}</th>
-                                        <td> {{comment.user.username}} </td>
-                                        <td> {{comment.content}} </td>
-                                        <td> {{comment.date}} </td>
-                                        {% if comment.is_approved %}
-                                            <td><a href="{% url 'adminka:disapprove_comment' comment.id %}">Скрыть</a></td> 
-                                        {% else %}
-                                            <td><a href="{% url 'adminka:approve_comment' comment.id %}">Разрешить</a></td> 
-                                        {% endif %}
-                                    </tr>
-                                {% endfor %}
-                            </tbody> 
-                        </table>
+                    <div class="col-md-10 col-md-offset-1" style="color:black;padding: 20px; border-radius:5px; border: solid black 4px">
+                    <form action="" method="POST" enctype="multipart/form-data" class="text-center black_label"  role="form" style="color:black">
+                    {% csrf_token %}
+                        {% for field in form %}
+                    <div class="form-group">
+                        {{field.label_tag}}
+                        <br>
+                        {% if field.errors %}
+                        <div class="alert alert-danger" role="alert">{{field.errors}}</div>
+                        {% endif %}
+                        {{field}}
+                    </div>
+                    {% endfor %}
+                    <div class="form-group">
+                                <br>
+                                <input type='submit' value='Сохранить' class="btn-sm btn-rounded btn btn-primary form-control" role="button">
+                            </div>
+                    </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </body>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 </html>

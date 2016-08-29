@@ -19,3 +19,21 @@ class News(models.Model):
 	class Meta:
 		verbose_name = "New"
 		verbose_name_plural = "News"
+
+
+class NewsComment(models.Model):
+	""" Класс для хранения Коментариев Обещаний """
+
+	user = models.ForeignKey(User, verbose_name='Пользователь')
+	news = models.ForeignKey(News, verbose_name='Принадлежит к новости')
+	comment = models.ForeignKey('self', null=True, blank=True)
+	date = models.DateTimeField(default=datetime.now)
+	content = models.TextField('Контент')
+	is_approved = models.BooleanField('Потвержден?', default=False)
+
+	def __unicode__(self):
+		return str(self.content)
+
+	class Meta:
+		verbose_name = "Коментарий"
+		verbose_name_plural = "Коментарии"

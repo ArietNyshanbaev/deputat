@@ -12,22 +12,21 @@
   </section>
   <div class="constrain">
     <div class="mini-head">
-      <span class="mini-head__title">новости</span>
+      <span class="mini-head__title">Мнения {{comments.count}} and {{comments_all.count}}</span>
     </div>
     <section class="content mb50">
       <header class="news-title">
-        <h1 class="news-name">{{new.title}}</h1>
+        <h1 class="news-name">{{forecast.title}}</h1>
       </header>
 
       <article class="news-article" id="news_article">
-        <img src=" ../../{{new.photo}}">
-        <br>
+        <p>{{forecast.body}}</p>
         <hr>
-        <p>{{new.body}}</p>
+        <p>Эксперт: {{forecast.expert}}</p>
       </article>
 
 <div class="share-btn ">
-    <span class="share-title">Дата <br>{{new.date}}</span>
+    <span class="share-title">Дата <br>{{forecast.date}}</span>
 </div>
 
       
@@ -40,12 +39,12 @@
 <div class="news-timeline">
  
  
-    <span class="date">Другие новости</span>
-    {% for novosti in other_news %}
+    <span class="date">Другие мнения</span>
+    {% for mnenie in other_forecasts %}
       <div class="item">
-        <a href="{% url 'news:detailed_news' novosti.id %}" class="link">
-        <span class="time">{{novosti.date}}</span><br>
-          {{ novosti.title }}
+        <a href="{% url 'forecast:detailed_forecast' mnenie.id %}" class="link">
+        <span class="time">{{mnenie.date}}</span><br>
+          {{mnenie.expert}} : {{ novomneniesti.title }}
         </a>
         <div class="align-right">
         </div>
@@ -56,7 +55,7 @@
 
 
   <div class="align-right">
-    <a href="{% url 'news:main' %}" class="all">Все новости</a>
+    <a href="{% url 'forecast:main' %}" class="all">Все мнения</a>
   </div>
 </div>
     </aside>
@@ -64,7 +63,7 @@
       <div class="comments" id="comments">
   <div class="comment-create comments-field">
 {% if user.is_authenticated %}
-<form action="{% url 'news:add_comment' new.id %}" method="POST">
+<form action="{% url 'forecast:add_comment' forecast.id %}" method="POST">
 {% csrf_token %}
   <div class="comments-item">
     
@@ -120,7 +119,7 @@
         </div><!-- /panel-body -->
       </div>
 
-      {% for comment in comment.newscomment_set.all %}
+      {% for comment in comment.forecastcomment_set.all %}
       {% if comment.is_approved %}
       <div class="panel panel-default" style="margin-left:50px">
         <div class="panel-heading">
@@ -133,18 +132,18 @@
         </div><!-- /panel-body -->
       </div>
       {% endif %}
-      {% for comment in comment.newscomment_set.all %}
-      {% if comment.is_approved %}
-      <div class="panel panel-default" style="margin-left:100px">
-        <div class="panel-heading">
-          <strong>{{comment.user.username}}</strong> <span class="text-muted " style="float:right">{{comment.date}}</span>
-        </div>
-        <div class="panel-body">
-          {{comment.content}} 
-          <hr>
-        </div><!-- /panel-body -->
-      </div>
-      {% endif %}
+      {% for comment in comment.forecastcomment_set.all %}
+        {% if comment.is_approved %}
+          <div class="panel panel-default" style="margin-left:100px">
+            <div class="panel-heading">
+              <strong>{{comment.user.username}}</strong> <span class="text-muted " style="float:right">{{comment.date}}</span>
+            </div>
+            <div class="panel-body">
+              {{comment.content}} 
+              <hr>
+            </div><!-- /panel-body -->
+          </div>
+        {% endif %}
       {% endfor %}
       {% endfor %}
 
@@ -171,7 +170,7 @@
       <p>{{comment.content}}</p>
       <hr>
         <div class="form-sumup fields-small">
-          <form action="{% url 'news:add_comment' new.id comment.id %}" method="POST">
+          <form action="{% url 'forecast:add_comment' forecast.id comment.id %}" method="POST">
           {% csrf_token %}
             <div class="form-sumup__fields">
               <div class="field">

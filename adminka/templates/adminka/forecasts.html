@@ -12,8 +12,6 @@
         <link href="{% static 'adminka/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
         <!-- Font Awesome CSS -->
         <link href="{% static 'adminka/css/font-awesome.min.css' %}" rel="stylesheet">
-        <!-- Custom CSS -->
-
         <!-- Custom Fonts -->
         <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
         <!-- Template js -->
@@ -27,7 +25,6 @@
     </head>
      <body>
         {% include 'messages.html' %}
-        
         <!-- Start Logo Section -->
         <section id="logo-section" class="text-center">
             <div class="container">
@@ -44,8 +41,7 @@
         <div class="container">
             <ol class="breadcrumb">
               <li><a href="{% url 'adminka:main' %}"> Главная </a></li>
-              <li><a href="{% url 'adminka:promises' %}">  Обещания  </a></li>
-              <li class="active">Коменты </li>
+              <li class="active"> Мнения </li>
             </ol>
         </div>
         <br><br>
@@ -55,31 +51,35 @@
 
             <div class="container">
                 <div class="row" style="color:white">
-                    <div class="col-md-8 col-md-offset-2" style="">
-                        <h4 class="text-center" style="color:black">Коменты</h4>
+                    <div class="col-md-7"></div>
+                    <div class="col-md-5 text-center">
+                        <a href="{% url 'adminka:create_forecast' %}"><button type="button" class="btn btn-info"> <i class="fa fa-plus" aria-hidden="true"></i> Добавить </button></a>
+                    </div>
+                    <div class="col-md-10 col-md-offset-1" style="">
+                        <h4 class="text-center" style="color:black">Мнения</h4>
                         <hr>
                         <table class="table" style="color:black">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Пользователь</th> 
-                                    <th>Комментарий</th> 
-                                    <th>Дата</th>
+                                    <th>Заголовок</th> 
+                                    <th>Эксперт</th> 
+                                    <th>Посмотреть</th>
                                     <th>Изменить</th>
+                                    <th>Удалить</th>
+                                    <th>Комментарии</th>
                                 </tr> 
                             </thead>
                             <tbody> 
-                                {% for comment in comments %}
+                                {% for forecast in forecasts %}
                                     <tr>
-                                        <th scope="row">{{forloop.counter}}</th>
-                                        <td> {{comment.user.username}} </td>
-                                        <td> {{comment.content}} </td>
-                                        <td> {{comment.date}} </td>
-                                        {% if comment.is_approved %}
-                                            <td><a href="{% url 'adminka:disapprove_comment' comment.id %}">Скрыть</a></td> 
-                                        {% else %}
-                                            <td><a href="{% url 'adminka:approve_comment' comment.id %}">Разрешить</a></td> 
-                                        {% endif %}
+                                        <th scope="row">{{forloop.counter}}</th> 
+                                        <td> {{forecast.title|slice:"20"}} </td> 
+                                        <td> {{forecast.expert|slice:"16"}} </td> 
+                                        <td><a href="{% url 'forecast:detailed_forecast' forecast.id %}" target="_blank" >Посмотреть</a></td> 
+                                        <td><a href="{% url 'adminka:edit_forecast' forecast.id %}">Изменить</a></td> 
+                                        <td><a href="" data-toggle="modal" data-target="#deleteForecast{{forecast.id}}" >Удалить</a></td> 
+                                        <td><a href="{% url 'adminka:comments_of_forecast' forecast.id %}">Коменты</a></td> 
                                     </tr>
                                 {% endfor %}
                             </tbody> 
@@ -89,4 +89,27 @@
             </div>
         </div>
     </body>
+
+<!-- DELETE DEPUTAT MODAL PAGE -->
+{% for forecast in forecasts %}
+<div class="modal fade" id="deleteForecast{{forecast.id}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Вы действительно хотите удалить это мнение?</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{forecast.title}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        <a href="{% url 'adminka:delete_forecast' forecast.id %}"><button style="background-color:#ca4b2f" class="btn btn-primary"> Удалить </button></a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endfor %}
+
+    
 </html>

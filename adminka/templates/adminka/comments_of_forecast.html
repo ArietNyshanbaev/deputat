@@ -44,7 +44,7 @@
         <div class="container">
             <ol class="breadcrumb">
               <li><a href="{% url 'adminka:main' %}"> Главная </a></li>
-              <li><a href="{% url 'adminka:promises' %}">  Обещания  </a></li>
+              <li><a href="{% url 'adminka:forecasts' %}">  Мнения  </a></li>
               <li class="active">Коменты </li>
             </ol>
         </div>
@@ -76,9 +76,9 @@
                                         <td> {{comment.content}} </td>
                                         <td> {{comment.date}} </td>
                                         {% if comment.is_approved %}
-                                            <td><a href="{% url 'adminka:disapprove_comment' comment.id %}">Скрыть</a></td> 
+                                            <td><a href="{% url 'adminka:disapprove_comment_forecast' comment.id %}">Скрыть</a></td> 
                                         {% else %}
-                                            <td><a href="{% url 'adminka:approve_comment' comment.id %}">Разрешить</a></td> 
+                                            <td><a href="{% url 'adminka:approve_comment_forecast' comment.id %}">Разрешить</a></td> 
                                         {% endif %}
                                     </tr>
                                 {% endfor %}

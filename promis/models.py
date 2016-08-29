@@ -64,7 +64,7 @@ class Comments(models.Model):
 	user = models.ForeignKey(User, verbose_name='Пользователь')
 	promis = models.ForeignKey(Promis, verbose_name='Принадлежит к Обещанию')
 	comment = models.ForeignKey('self', null=True, blank=True)
-	date = models.DateTimeField(default=datetime.now())
+	date = models.DateTimeField(default=datetime.now)
 	content = models.TextField('Контент')
 	is_approved = models.BooleanField('Потвержден?', default=False)
 

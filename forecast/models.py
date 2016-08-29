@@ -8,12 +8,12 @@ from person.models import Person
 
 class Forecast(models.Model):
 	""" Класс для хранения Мнениe """
-	person = models.ForeignKey(Person, verbose_name='Депутат')
-	title = models.CharField('Заголoвoк', max_length=200)
+	expert = models.CharField('Эксперт ', max_length=200)
+	title = models.CharField('Заголoвoк ', max_length=200)
 	body = models.TextField('Тело')
-	date = models.DateTimeField('Дата' )
-	user = models.ForeignKey(User, verbose_name='Эксперт')
-	is_approved = models.BooleanField('Потвержден?', default=False)
+	date = models.DateField('Дата')
+	user = models.ForeignKey(User, verbose_name='Добавлено пользователем')
+	is_approved = models.BooleanField('Потвержден?', default=True)
 
 	def __unicode__(self):
 		return self.title
@@ -22,15 +22,19 @@ class Forecast(models.Model):
 		verbose_name = "Мнение"
 		verbose_name_plural = "Мнения"
 
-class ForecastRank(models.Model):
-	""" Класс для хранения Рейтинга Mнений """
-	forecast = models.ForeignKey(Forecast, verbose_name='Принадлежит к Мнению')
-	positive = models.BooleanField('Позитивный?', default=True)
-	user = models.ForeignKey(User, verbose_name='Принадлежит пользователю') 
+class ForecastComment(models.Model):
+	""" Класс для хранения Коментариев Мнений """
+
+	user = models.ForeignKey(User, verbose_name='Пользователь')
+	forecast = models.ForeignKey(Forecast, verbose_name='Принадлежит к мнению')
+	comment = models.ForeignKey('self', null=True, blank=True)
+	date = models.DateTimeField(default=datetime.now)
+	content = models.TextField('Контент')
+	is_approved = models.BooleanField('Потвержден?', default=False)
 
 	def __unicode__(self):
-		return str(self.positive)
+		return str(self.content)
 
 	class Meta:
-		verbose_name = "Рейтинг Mнения"
-		verbose_name_plural = "Рейтинг Mнений"
+		verbose_name = "Коментарий"
+		verbose_name_plural = "Коментарии"

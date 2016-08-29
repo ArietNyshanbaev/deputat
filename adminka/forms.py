@@ -5,6 +5,7 @@ from ckeditor.widgets import CKEditorWidget
 from ckeditor.fields import RichTextField
 from person.models import Person, MARITAL_STATUS_LIST, Category, Party, Region
 from news.models import News
+from forecast.models import Forecast
 from promis.models import Promis, STATUS_LIST
 
 
@@ -97,4 +98,29 @@ class PromisForm(forms.ModelForm):
 	class Meta:
 		model = Promis
 		exclude = ('user',)
+
+class ForecastForm(forms.ModelForm):
+	
+	title = forms.CharField(
+		label=' Заголовок ', 
+		required=True, 
+		max_length=200,
+		widget=forms.TextInput(attrs={'required': 'true', 'class':'form-control'})
+	)
+
+	date = forms.DateField(label=' Дата ', widget=forms.TextInput(attrs={'type':'date', 'class':'form-control'}))
+
+	expert = forms.CharField(
+		label=' Эксперт ', 
+		required=True, 
+		max_length=200,
+		widget=forms.TextInput(attrs={'required': 'true', 'class':'form-control'})
+	)
+
+	body = forms.CharField(label=' Тело ', widget=CKEditorWidget(config_name='awesome_ckeditor'))
+
+
+	class Meta:
+		model = Forecast
+		exclude = ('user','is_approved',)
 

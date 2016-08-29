@@ -58,7 +58,7 @@
                     <div class="col-md-5 text-center">
                         <a href="{% url 'adminka:create_news' %}"><button type="button" class="btn btn-info"> <i class="fa fa-plus" aria-hidden="true"></i> Добавить </button></a>
                     </div>
-                    <div class="col-md-8 col-md-offset-2" style="">
+                    <div class="col-md-10 col-md-offset-1" style="">
                         <h4 class="text-center" style="color:black">Новости</h4>
                         <hr>
                         <table class="table" style="color:black">
@@ -70,6 +70,7 @@
                                     <th>Посмотреть</th>
                                     <th>Изменить</th>
                                     <th>Удалить</th>
+                                    <th>Комментарии</th>
                                 </tr> 
                             </thead>
                             <tbody> 
@@ -81,6 +82,7 @@
                                         <td><a href="{% url 'news:detailed_news' news.id %}" target="_blank" >Посмотреть</a></td> 
                                         <td><a href="{% url 'adminka:edit_news' news.id %}">Изменить</a></td> 
                                         <td><a href="" data-toggle="modal" data-target="#deleteNews{{news.id}}" >Удалить</a></td> 
+                                        <td><a href="{% url 'adminka:comments_of_news' news.id %}">Коменты</a></td> 
                                     </tr>
                                 {% endfor %}
                             </tbody> 

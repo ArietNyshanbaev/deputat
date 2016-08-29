@@ -232,6 +232,7 @@
       </div>
 
       {% for comment in comment.comments_set.all %}
+      {% if comment.is_approved %}
       <div class="panel panel-default" style="margin-left:50px">
         <div class="panel-heading">
           <strong>{{comment.user.username}}</strong> <span class="text-muted " style="float:right">{{comment.date}}</span>
@@ -242,7 +243,9 @@
           <a data-toggle="modal" data-target="#commentModal{{comment.id}}">Ответить</a>
         </div><!-- /panel-body -->
       </div>
+      {% endif %}
       {% for comment in comment.comments_set.all %}
+      {% if comment.is_approved %}
       <div class="panel panel-default" style="margin-left:100px">
         <div class="panel-heading">
           <strong>{{comment.user.username}}</strong> <span class="text-muted " style="float:right">{{comment.date}}</span>
@@ -252,6 +255,7 @@
           <hr>
         </div><!-- /panel-body -->
       </div>
+      {% endif %}
       {% endfor %}
       {% endfor %}
 

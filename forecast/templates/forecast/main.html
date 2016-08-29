@@ -2,38 +2,31 @@
 {%load staticfiles%}
 {% block content %}
 <!-- Button trigger modal -->
-
 <br>
  <div class="container">
-    <h2 class="text-center">Новости</h2>
+    <h2 class="text-center">Мнения Экспертов</h2>
   </div>
   <br><br><br>
-    <section class="container">
-    <div class="constrain">
+  <section class="container">
+  <div class="constrain">
       <div class="tile-widgets" id="js-tile-widgets">
-          
-          
 <div class="row">      
-{% for new in news %}             
+{% for forecast in forecasts %}             
 <div class="cell">
-<div class="tw-block tw-block_cover tw-block_story">
-  <span class="status ">
-    Новости
-  </span>
-    <div class="cover" style="background-image: url(../../{{new.photo}});"></div>
+  <div class="tw-block tw-block_cover tw-block_story" style="background-color:#d4cdcd">
+    <span class="status ">
+      Мнение
+    </span>
       <div class="wrap-title">
-        <a href="/news/detailed_news/{{new.id}}" class="title">{{new.title}}</a>
+        <a href="{% url 'forecast:detailed_forecast' forecast.id %}" class="title" style="color:#3b3534;cursor:pointer">{{forecast.expert}} : {{forecast.title}}</a>
       </div>  
-</div> 
+  </div> 
 </div>
 {% if forloop.counter|divisibleby:3 %}
 <div class="row"></div>
 {% endif %}
 {% endfor %}            
-            
 </div>
-          
-        
       </div><!-- class="tile-widgets" -->
     </div><!-- class="constrain" -->
 </section>
