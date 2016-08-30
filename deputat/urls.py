@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^promis/', include('promis.urls', namespace='promis')),
     url(r'^password_reset/', include('password_reset.urls')),
     url(r'^forecast/', include('forecast.urls', namespace='forecast')),
+    url(r'^stopkadr/', include('stopkadr.urls', namespace='stopkadr')),
 ]
 
 if settings.DEBUG:
