@@ -3,6 +3,13 @@ from datetime import datetime
 # Импорт стандартных пакетов Django
 from django.db import models
 from django.contrib.auth.models import User
+# third party packages imports
+from PIL import Image, ImageOps
+# python packages imports
+import StringIO
+from django.dispatch import receiver
+from django.db.models.signals import pre_delete
+from django.core.files.uploadedfile import InMemoryUploadedFile
 # Импорт Моделей из Баззы данных
 
 MARITAL_STATUS_LIST = (
@@ -73,8 +80,41 @@ class Person(models.Model):
 	party = models.ForeignKey(Party, verbose_name='Партия')
 	photo = models.ImageField('фото', upload_to='media', null=True, blank=True)
 
+	def save(self, *args, **kwargs):
+		if self.photo:
+			try:
+				img = Image.open(StringIO.StringIO(self.photo.read()))
+
+				if img.mode != 'RGB':
+					img = img.convert('RGB')
+				img_width = self.photo.width
+				img_height = self.photo.height
+				while img_width > 1300 or img_height > 1300:
+					img_width /= 1.5
+					img_height /= 1.5
+
+
+				img.thumbnail((img_width, img_height), Image.ANTIALIAS)
+				if img_width>img_height:
+					size = (int(img_width),int(img_width*1.0))
+				else:
+					size = (int(img_height*1.34),int(img_height))
+
+				image = img
+				background = Image.new('RGBA', size, (255, 255, 255, 0))
+				background.paste(image,((size[0] - image.size[0]) / 2, (size[1] - image.size[1]) / 2))
+
+				output = StringIO.StringIO()
+				background.save(output, format='JPEG', quality=70)
+				output.seek(0)
+				self.photo.delete(False)
+				self.photo = InMemoryUploadedFile(output, 'ImageField', "file.jpg", 'image/jpeg', output.len, None)
+			except IOError:
+				pass
+		super(Person, self).save(*args, **kwargs)
+
 	def __unicode__(self):
-		return self.first_name + " " + self.last_name
+		return self.last_name + " " + self.first_name + " " + self.middle_name
 
 	class Meta:
 		verbose_name = "Персона"

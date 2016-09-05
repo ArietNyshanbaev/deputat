@@ -46,7 +46,8 @@ INSTALLED_APPS = (
     'main',
     'auths',
     'news',
-    'adminka'
+    'adminka',
+    'stopkadr'
 )
 
 MIDDLEWARE_CLASSES = (

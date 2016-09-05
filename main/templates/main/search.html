@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{%load staticfiles%}
+{% block content %}
+    <section class="container">
+        <div class="header__block mb20">
+          
+        </div>
+  <div class="constrain">
+    <div class="mini-head">
+      <h1 class="mini-head__title docs-title">Результаты поиска</h1>
+    </div>
+    <section class="container-fluid">
+      <div class="filter-promises" >
+        <div class="row">
+{% for promis in promises %}
+<div class="col-md-8 col-md-offset-2">
+<section class="speech speech_promises">
+  <span class="speech__section status-actually">
+      Обещание
+  </span>
+  <div class="speech__content">
+    <a href="{% url 'person:detailed_person' promis.person.id %}" class="avatar-circle avatar-circle_large">
+      <img src="../../{{promis.person.photo}}" alt="" class="avatar-img">
+    </a>
+    <div class="info">
+      <div class="entry-title">
+        <a href="{% url 'promis:detailed_promis' promis.id %}" class="title-link"> {{promis.title}} </a>
+      </div>
+    </div>
+  </div>
+  <div class="speech__ctrl">
+<div class="bvote">
+        <div class="bvote__action">
+            
+                <a href="{% url 'promis:believe' promis.id %}"  class="bvote-btn bvote-btn_believe">
+                    <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i><span class="btn-text">Верю</span>
+                </a>
+                <a href="{% url 'promis:not_believe' promis.id %}"  class="bvote-btn bvote-btn_bottom bvote-btn_not-believe">
+                    <i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i><span class="btn-text">Не верю</span>
+                </a>
+            
+        </div>
+</div>
+  </div>
+</section>
+</div>
+{% endfor %}
+    </div>
+      </div>
+      </div>
+    </section>
+
+  </div><!-- class="constrain" -->
+
+{% endblock %}

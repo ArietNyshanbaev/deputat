@@ -5,11 +5,8 @@
   <title>Deputat.kg - сервис контроля обещаний</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="Keywords" content="обещания, пустые обещания, исполнение обещаний, предвыборные обещания, выполнение обещаний, забытые обещания, прогноз политический, обещание Путина, новости политики, новости, политическая аналитика">
-  <meta name="Description" content="Обещания.Ru посвящён контролю обещаний политиков и известных людей. Вы также можете присылать свои списки обещаний и ставить на контроль.">
+  <meta name="Description" content="Deputat.kg посвящён контролю обещаний политиков и известных людей. Вы также можете присылать свои списки обещаний и ставить на контроль.">
   <link rel="apple-touch-icon-precomposed" href="http://www.obeschania.ru/static/images/favicon/apple-touch-icon-144x144-precomposed.ico" sizes="144x144">
-  <link rel="shortcut icon" href="http://www.obeschania.ru/static/images/favicon/favicon_32.ico">
-  <link rel="shortcut icon" href="http://www.obeschania.ru/static/images/favicon/favicon.ico" type="image/x-icon">
-  <link rel="image_src" href="http://www.obeschania.ru/static/images/ogimages/main.jpg">
   <!-- START CSS FILES -->
   
   <link rel="stylesheet" href="{% static 'css/css' %}" type="text/css">
@@ -73,10 +70,11 @@
         <img src="{% static 'images/svid.jpeg' %}" width="300" alt="Обещания.ru" class="img-logo">
       </a>
       <div class="header__search" id="js-header-search">
-        <form action="http://www.obeschania.ru/search/" method="GET">
+        <form action="{% url 'main:search'%}" method="POST">
+          {% csrf_token %}
           <input type="text" placeholder="Поиск..." name="q" id="js-header-search-input">
-          <button type="submit" class="btn btn_supper">
-            <i class="search-icon"></i>
+          <button type="submit" style="display:block" class="btn btn_supper">
+            <i class="fa fa-search" aria-hidden="true"></i>
           </button>
         </form>
       </div>
@@ -96,14 +94,15 @@
         </div>
       </div>
     </div>
-    <div class="header__nav">
+    <div class="header__nav" style="background-color:#c2c2c2">
       <div class="constrain">
        <table class="table">
     <tbody><tr>
-        <td class="td">
-            <a href="/news/"  class="link">Новости</a>
-        </td>
       
+        <td class="td">
+            <a href="{% url 'promis:new_promises' %}" class="link">Обещания</a>
+        </td>
+
         <td class="td">
             <a href="{% url 'promis:done_promises' %}" class="link">Выполненные обещания</a>
         </td>
@@ -113,14 +112,15 @@
         </td>
       
         <td class="td">
-            <a href="{% url 'promis:new_promises' %}" class="link">Новые обещания</a>
-        </td>
-      
-        <td class="td">
             <a href="{% url 'forecast:main' %}" class="link">Мнения экспертов</a>
         </td>
 
         <td class="td">
+            <a href="{% url 'stopkadr:main' %}" class="link">Медиа Факты</a>
+        </td>
+
+        <td class="td">
+            <a href="{% url 'news:main' %}"  class="link">Парламентские новости</a>
         </td>
       
     </tr>

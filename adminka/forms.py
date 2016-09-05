@@ -6,6 +6,7 @@ from ckeditor.fields import RichTextField
 from person.models import Person, MARITAL_STATUS_LIST, Category, Party, Region
 from news.models import News
 from forecast.models import Forecast
+from stopkadr.models import MediaFile
 from promis.models import Promis, STATUS_LIST
 
 
@@ -123,4 +124,21 @@ class ForecastForm(forms.ModelForm):
 	class Meta:
 		model = Forecast
 		exclude = ('user','is_approved',)
+
+class MediaFileForm(forms.ModelForm):
+	
+	description = forms.CharField(
+		label=' Описание ', 
+		required=True, 
+		max_length=1000,
+		widget=forms.TextInput(attrs={'required': 'true', 'class':'form-control'})
+	)
+
+
+	is_video = forms.BooleanField(label=' Видео? ', widget=forms.CheckboxInput(attrs={'class':'form-control'}))
+
+
+	class Meta:
+		model = MediaFile
+		exclude = ('date',)
 

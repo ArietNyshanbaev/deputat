@@ -22,7 +22,7 @@
   </span>
     <div class="cover" style="background-image: url(../../{{new.photo}});"></div>
       <div class="wrap-title">
-        <a href="/news/detailed_news/{{new.id}}" class="title">{{new.title}}</a>
+        <a href="{% url 'news:detailed_news' new.id %}" class="title">{{new.title}}</a>
       </div>  
 </div> 
 </div>

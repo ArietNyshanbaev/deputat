@@ -1,0 +1,43 @@
+﻿{% extends 'base.html' %}
+{%load staticfiles%}
+{% block content %}
+<!-- Button trigger modal -->
+
+<br>
+ <div class="container">
+    <h2 class="text-center">Медиа Файлы </h2>
+  </div>
+  <br><br><br>
+    <section class="container">
+    <div class="constrain">
+      <div class="tile-widgets" id="js-tile-widgets">
+          
+          
+<div class="row">      
+{% for file in files %}             
+<div class="cell">
+<a href="{% url 'stopkadr:detailed_mediafile' file.id %}">
+<div class="tw-block tw-block_cover tw-block_story">
+  <span class="status ">
+  {% if file.is_video %}
+    Видео
+  {% else %}
+    Фото 
+  {% endif %}
+  </span>
+    <div class="cover" style="background-image: url(../../{{file.photo}});background-size: contain;"></div>
+</div> 
+</a>
+</div>
+{% if forloop.counter|divisibleby:3 %}
+<div class="row"></div>
+{% endif %}
+{% endfor %}            
+            
+</div>
+          
+        
+      </div><!-- class="tile-widgets" -->
+    </div><!-- class="constrain" -->
+</section>
+{% endblock %}

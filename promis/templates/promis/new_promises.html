@@ -9,14 +9,15 @@
     <div class="mini-head">
       <h1 class="mini-head__title docs-title">Новые Обещания</h1>
     </div>
-    <section class="content content-right">
-      <div class="filter-promises">
-
+    <section class="container-fluid">
+      <div class="filter-promises" >
+        <div class="row">
 {% for promis in promises %}
+<div class="col-md-8 col-md-offset-2">
 <section class="speech speech_promises">
   <span class="speech__section status-actually">
       Обещание
-    </span>
+  </span>
   <div class="speech__content">
     <a href="{% url 'person:detailed_person' promis.person.id %}" class="avatar-circle avatar-circle_large">
       <img src="../../{{promis.person.photo}}" alt="" class="avatar-img">
@@ -25,32 +26,10 @@
       <div class="entry-title">
         <a href="{% url 'promis:detailed_promis' promis.id %}" class="title-link"> {{promis.title}} </a>
       </div>
-      <span class="who">Фракция {{promis.person.party}}</span>
-      <div class="speech__period">
-        <span class="date tooltip tooltip-given_on">
-        22/08/2016
-        <span class="tooltip-status">Дано</span>
-        </span>
-        <span class="points"></span>
-        <span class="date tooltip tooltip-to_execute_on">31/12/2017
-        <span class="tooltip-status">должно быть<br>выполнено</span>
-        </span>
-      </div>
     </div>
   </div>
   <div class="speech__ctrl">
 <div class="bvote">
-        <div class="bvote__load" style="display:none">
-            <span class="text">Спасибо, <br>ваш голос <br>учтен</span>
-            <span class="text text_bottom">Рейтинг <br>в процессе <br>подсчета</span>
-        </div>
-        <div class="js_vote__scale bvote__scale bvote__scale_bad" style="display:none">
-            <span class="bg" style="height: 0%"></span>
-                <span class="value">
-                    <span class="value-rating">0%</span>
-                    <span class="value-title">Рейтинг доверия</span>
-                </span>
-        </div>
         <div class="bvote__action">
             
                 <a href="{% url 'promis:believe' promis.id %}"  class="bvote-btn bvote-btn_believe">
@@ -61,15 +40,12 @@
                 </a>
             
         </div>
-        <div style="display:none;">
-            <input class="js_vote_sum_votes_plus_one" value="5">
-            <input class="js_vote_yes" value="3">
-        </div>
-    
 </div>
   </div>
 </section>
+</div>
 {% endfor %}
+    </div>
       </div>
       </div>
     </section>

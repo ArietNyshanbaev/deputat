@@ -24,7 +24,7 @@ def add_promis(request, key='main'):
 def detailed_promis(request, promis_id):
 	# initialize variables
 	args={}
-	promis = get_object_or_404(Promis, pk=promis_id)
+	promis = get_object_or_404(Promis, pk=promis_id, is_approved=True)
 	args['comments'] = Comments.objects.filter(promis=promis, comment=None, is_approved=True)
 	args['comments_all'] = Comments.objects.filter(promis=promis, is_approved=True)
 	args['promis'] = promis
@@ -38,7 +38,7 @@ def detailed_promis(request, promis_id):
 def new_promises(request):
 	# initialize variables
 	args={}
-	args['promises'] = Promis.objects.filter(is_approved=True, status='Новое')
+	args['promises'] = Promis.objects.filter(is_approved=True, status='Новое ')
 	return render(request, 'promis/new_promises.html', args)
 
 def done_promises(request):

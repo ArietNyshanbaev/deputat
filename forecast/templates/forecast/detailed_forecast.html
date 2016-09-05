@@ -12,7 +12,7 @@
   </section>
   <div class="constrain">
     <div class="mini-head">
-      <span class="mini-head__title">Мнения {{comments.count}} and {{comments_all.count}}</span>
+      <span class="mini-head__title">Мнения экспертов</span>
     </div>
     <section class="content mb50">
       <header class="news-title">
@@ -20,7 +20,9 @@
       </header>
 
       <article class="news-article" id="news_article">
+      {% autoescape off %}
         <p>{{forecast.body}}</p>
+      {% endautoescape %}
         <hr>
         <p>Эксперт: {{forecast.expert}}</p>
       </article>

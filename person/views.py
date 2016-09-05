@@ -1,5 +1,5 @@
 ﻿from django.shortcuts import render, get_object_or_404
-from .models import Party, Person
+from .models import Party, Person, Region
 from promis.models import  Promis
 
 def zhogorku_kenesh(request, party_id=-1):
@@ -14,15 +14,15 @@ def zhogorku_kenesh(request, party_id=-1):
 	template = 'person/zhogorku_kenesh.html'
 	return render(request, template, args)
 
-def mestnyi_kenesh(request, party_id=-1):
+def mestnyi_kenesh(request, region_id=-1):
 	args = {}
-	if party_id < 1:
-		active_party = Party.objects.all()[0]
+	if region_id < 1:
+		active_region = Region.objects.all()[0]
 	else :
-		active_party =  get_object_or_404(Party, pk=party_id)
-	args['persons'] = Person.objects.filter(party=active_party,category__title='МК')
-	args['active_party'] = active_party
-	args['parties'] = Party.objects.all()
+		active_region =  get_object_or_404(Region, pk=region_id)
+	args['persons'] = Person.objects.filter(region=active_region, category__title='МК')
+	args['active_region'] = active_region
+	args['regions'] = Region.objects.all()
 	template = 'person/mestnyi_kenesh.html'
 	return render(request, template, args)
 

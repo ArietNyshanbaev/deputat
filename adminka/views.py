@@ -16,9 +16,10 @@ from custom_code.decorators import email_required, logout_required
 # import of custom writen decorator and views
 from promis.models import Promis, Result, Comments
 from person.models import Person
-from .forms import PersonForm, NewsForm, PromisForm, ForecastForm
+from .forms import PersonForm, NewsForm, PromisForm, ForecastForm, MediaFileForm
 from news.models import News, NewsComment
 from forecast.models import Forecast, ForecastComment
+from stopkadr.models import MediaFile
 
 def main(request):
 	args = {}
@@ -304,3 +305,49 @@ def disapprove_comment_forecast(request, comment_id):
 	comment.save()
 	messages.info(request, 'Вы скрыли комент :' + comment.content)
 	return redirect(reverse('adminka:comments_of_forecast', kwargs={'forecast_id': comment.forecast.id}))
+
+def mediafiles(request):
+	args = {}
+	args['files'] = MediaFile.objects.all()
+	template = 'adminka/mediafiles.html'
+	return render(request, template, args)
+
+def delete_mediafile(request, file_id):
+	file = get_object_or_404(MediaFile, id=file_id)
+	title = file.description
+	file.delete()
+	messages.info(request, 'Вы удалили медиафайл ' + title)
+	return redirect(reverse('adminka:mediafiles'))
+
+def create_mediafile(request):
+	args = {}
+	args.update(csrf(request))
+	form = MediaFileForm()
+
+	if request.POST:
+		form = MediaFileForm(request.POST, request.FILES)
+		if form.is_valid() :
+			file = form.save()
+			title = file.description
+			messages.info(request, 'Медиафайл ' + title + ' успешно создан. ')
+			return redirect(reverse('adminka:mediafiles'))
+	args['form'] = form
+	template = 'adminka/create_mediafile.html'
+	return render(request, template, args)
+
+def edit_mediafile(request, file_id):
+	args = {}
+	args.update(csrf(request))
+	instance = get_object_or_404(MediaFile, id=file_id)
+	if request.method == 'POST':
+		form = MediaFileForm(request.POST, request.FILES, instance=instance)
+		if form.is_valid() :
+			file = form.save()
+			title = file.description
+			messages.info(request, 'Медиа Файл ' + title + ' успешно изменен. ')
+			return redirect(reverse('adminka:mediafiles'))
+	else:
+		form = MediaFileForm(instance=instance)
+	args['form'] = form
+	template = 'adminka/create_mediafile.html'
+	return render(request, template, args)

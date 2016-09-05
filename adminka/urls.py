@@ -39,4 +39,9 @@ urlpatterns = [
     url(r'^comments_of_forecast/(?P<forecast_id>.+)$', 'adminka.views.comments_of_forecast', name='comments_of_forecast'),
     url(r'^approve_comment_forecast/(?P<comment_id>.+)$', 'adminka.views.approve_comment_forecast', name='approve_comment_forecast'),
     url(r'^disapprove_comment_forecast/(?P<comment_id>.+)$', 'adminka.views.disapprove_comment_forecast', name='disapprove_comment_forecast'),
+    # Routes to comments of Stop Kadr section of Adminka module
+    url(r'^mediafiles$', 'adminka.views.mediafiles', name='mediafiles'),
+    url(r'^mediafiles/delete_mediafile/(?P<file_id>.+)$', 'adminka.views.delete_mediafile', name='delete_mediafile'),
+    url(r'^mediafiles/create_mediafile$', 'adminka.views.create_mediafile', name='create_mediafile'),
+    url(r'^mediafiles/edit_mediafile/(?P<file_id>.+)$', 'adminka.views.edit_mediafile', name='edit_mediafile'),
 ]
