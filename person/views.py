@@ -14,15 +14,21 @@ def zhogorku_kenesh(request, party_id=-1):
 	template = 'person/zhogorku_kenesh.html'
 	return render(request, template, args)
 
-def mestnyi_kenesh(request, region_id=-1):
+def mestnyi_kenesh(request, region_id=-1, party_id=-1):
 	args = {}
 	if region_id < 1:
 		active_region = Region.objects.all()[0]
 	else :
 		active_region =  get_object_or_404(Region, pk=region_id)
-	args['persons'] = Person.objects.filter(region=active_region, category__title='МК')
+	persons = Person.objects.filter(region=active_region, category__title='МК')
+	if party_id > 0:
+		active_party =  get_object_or_404(Party, pk=party_id)
+		persons = persons.filter(party=active_party)
+		args['active_party'] = active_party
+	args['persons'] = persons
 	args['active_region'] = active_region
 	args['regions'] = Region.objects.all()
+	args['parties'] = Party.objects.all()
 	template = 'person/mestnyi_kenesh.html'
 	return render(request, template, args)
 

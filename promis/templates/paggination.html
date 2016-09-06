@@ -1,0 +1,19 @@
+<section style="background-color:#f95446; ">
+    <div class="text-center">
+        <nav style="padding-bottom:1px;padding-top:8px; background-color:#c15166">
+            <ul class="pager" style="margin: 0px 0px 15px 0px; padding: 7px 7px 0px 7px" >
+                {% if promises.has_previous %}
+                    <li class="previous"><a href="?page={{ promises.previous_page_number }}"><span aria-hidden="true">&larr;</span> Пред. </a></li>
+                {% else %}
+                    <li class="previous disabled" style="visibility: hidden;"><a href=""><span aria-hidden="true">&larr;</span> Пред. </a></li>
+                {% endif %}
+               <span style="color:white"><p style="display: inline-block;"> Страница {{ promises.number }} из {{ promises.paginator.num_pages }}.</p> </span>
+                {% if promises.has_next %}
+                    <li class="next"><a href="?page={{ promises.next_page_number }}">След. <span aria-hidden="true">&rarr;</span></a></li>
+                {% else %}
+                    <li class="next disabled" style="visibility: hidden;"><a href="">След. <span aria-hidden="true">&rarr;</span></a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</section>

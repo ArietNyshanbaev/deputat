@@ -13,8 +13,12 @@
       
   <div class="constrain">
     <div class="mini-head">
-      <span style="color:#c15166; display:inline-block" class="mini-head__title">фракция {{active_party.title}}</span>
-      <span class="mini-head__title" style="float:right; display:inline-block">Местный Кенеш </span>
+      <span style="color:#c15166; display:inline-block" class="mini-head__title">Регион : {{active_region}} 
+      {% if active_party %}
+        | фракция {{active_party.title}}
+      {% endif %}
+      </span>
+      <span class="mini-head__title" style="float:right; display:inline-block"> Местный Кенеш </span>
     </div>
     <div class="wfilter">
     <div class="list-group">
@@ -23,6 +27,17 @@
             <a href="{% url 'person:mestnyi_kenesh' region.id %}" class="list-group-item" style="background-color:#c15166;">{{region}}</a>
           {% else %}
             <a href="{% url 'person:mestnyi_kenesh' region.id %}" class="list-group-item">{{region}}</a>
+          {% endif %}
+        {% endfor %}
+    </div>
+
+    <br> <h4 class="text-center" style="color:#ae0c2b">Партии </h4><br>
+    <div class="list-group">
+        {% for party in parties %}
+          {% if party == active_party %}
+            <a href="{% url 'person:mestnyi_kenesh' active_region.id  party.id %}" class="list-group-item" style="background-color:#c15166;">{{party}}</a>
+          {% else %}
+            <a href="{% url 'person:mestnyi_kenesh' active_region.id party.id %}" class="list-group-item">{{party}}</a>
           {% endif %}
         {% endfor %}
     </div>
@@ -36,9 +51,9 @@
           
           {% for person in persons %}
           <li class="item">
-            <a href="" class="link">
+            <a href="{% url 'person:detailed_person' person.id %}" class="link">
               <div class="wrap">
-                <img src=" ../../{{person.photo}}" alt="{{person}}" class="img">
+                <img src=" ../../../{{person.photo}}" alt="{{person}}" class="img">
               </div>
               <span class="name">{{person.last_name}} {{person.first_name}} {{person.middle_name}}</span>
             </a>

@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse_lazy
 from .models import Promis, Result, PromisRank, Comments
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
@@ -38,19 +39,61 @@ def detailed_promis(request, promis_id):
 def new_promises(request):
 	# initialize variables
 	args={}
-	args['promises'] = Promis.objects.filter(is_approved=True, status='Новое ')
+	promises = Promis.objects.filter(is_approved=True, status='Новое ')
+	paginator = Paginator(promises, 10)
+	
+	page = request.GET.get('page')
+	
+
+	try:
+		promises = paginator.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		promises = paginator.page(1)
+	except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+ 		promises = paginator.page(paginator.num_pages)
+
+	args['promises'] = promises
 	return render(request, 'promis/new_promises.html', args)
 
 def done_promises(request):
 	# initialize variables
 	args={}
-	args['promises'] = Promis.objects.filter(is_approved=True, status='Выполнено')
+	promises = Promis.objects.filter(is_approved=True, status='Выполнено')
+	paginator = Paginator(promises, 10)
+	page = request.GET.get('page')
+	
+
+	try:
+		promises = paginator.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		promises = paginator.page(1)
+	except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+ 		promises = paginator.page(paginator.num_pages)
+
+	args['promises'] = promises
 	return render(request, 'promis/done_promises.html', args)
 
 def not_done_promises(request):
 	# initialize variables
 	args={}
-	args['promises'] = Promis.objects.filter(is_approved=True, status='Не выполнено')
+	promises = Promis.objects.filter(is_approved=True, status='Не выполнено')
+	paginator = Paginator(promises, 10)
+	page = request.GET.get('page')
+	
+
+	try:
+		promises = paginator.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		promises = paginator.page(1)
+	except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+ 		promises = paginator.page(paginator.num_pages)
+	args['promises'] = promises
 	return render(request, 'promis/not_done_promises.html', args)
 
 @login_required(login_url=reverse_lazy('auths:signin'))
