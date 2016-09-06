@@ -1,16 +1,10 @@
 {% extends 'base.html' %}
 {%load staticfiles%}
 {% block content %}
-
     <section class="container">
-      
         <div class="header__block mb20">
-          
         </div>
-      
         <br><br><br>
-
-      
   <div class="constrain">
     <div class="mini-head">
       <span class="mini-head__title">обещание</span>
@@ -141,30 +135,11 @@
   </div>
 
   <div class="clearfix">
-    
-    
-   <!--     
-
-<script type="text/javascript">
-    window.onload = function()
-    {
-        window.share = new Share (
-                        "http://www.obeschania.ru/documents/promises/tureckij-potok-erdogan",
-                        "Оплатим строительство половины Турецкого потока",
-                        "http://www.obeschania.ru",
-                        "Турция готова оплатить половину расходов на&nbsp;строительство сухопутной части газопровода Турецкий поток, об этом заявил президент страны Реджеп Эрдоган после&nbsp;встречи с Владимиром Путиным.&nbsp;России это позволит сэкономить более 2,2 млрд евро.Мы сообщили, ..."
-                        );
-    };
-</script>
-
-
-<div class="share-btn right">
-    <span class="share-title">Поделиться ссылкой <br>на эту тему с друзьями:</span>
-    <a onclick="share.vk();" class="share-link share-link_vk sharing_action" data-url="/gamification/share/document/13855/"></a>
-    <a onclick="share.fb();" class="share-link share-link_fb sharing_action" data-url="/gamification/share/document/13855/"></a>
-    <a onclick="share.tw();" class="share-link share-link_tw sharing_action" data-url="/gamification/share/document/13855/"></a>
-</div>-->
       <a data-toggle="modal" data-target="#LinkModal" class="source-link">Источник</a>
+      <br>
+      <div class="share42init"></div>
+<script type="text/javascript" src="{% static 'share42/share42.js' %}"></script>
+<br>
   </div>  
     <div class="comments" id="comments">
   <div class="comment-create comments-field">
@@ -263,27 +238,11 @@
     </div>   
   </div><!-- /row -->
 </div><!-- /container -->
-
-
-
-
-
-
   </div>
-
   </div>
-
-
 </div>
-
-
-  
-
-  </div><!-- class="constrain" -->
-
-
+</div><!-- class="constrain" -->
 <!-- ============== START MODAL PAGES ================= -->
-
 <!-- LINK MODAL PAGE -->
 <div class="modal fade" id="LinkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
