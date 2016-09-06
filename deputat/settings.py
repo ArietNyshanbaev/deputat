@@ -59,6 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'deputat.middleware.adminka_middleware.AdminkaMiddleware'
 )
 
 ROOT_URLCONF = 'deputat.urls'
