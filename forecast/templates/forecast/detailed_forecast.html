@@ -1,6 +1,7 @@
 ﻿{% extends 'base.html' %}
 {%load staticfiles%}
 {% block content %}
+<meta name="Description" content="{{forecast.title}}">
     <section class="container">
       
         <div class="header__block mb20">
@@ -20,16 +21,15 @@
       </header>
 
       <article class="news-article" id="news_article">
-      {% autoescape off %}
-        <p>{{forecast.body}}</p>
-      {% endautoescape %}
+        <p>{{forecast.body|linebreaks}}</p>
         <hr>
         <p>Эксперт: {{forecast.expert}}</p>
       </article>
 
 <div class="share-btn ">
-    <span class="share-title">Дата <br>{{forecast.date}}</span>
+    <span class="share-title">Дата : {{forecast.date}}</span>
 </div>
+<br>
 <div class="share42init"></div>
 <script type="text/javascript" src="{% static 'share42/share42.js' %}"></script>
       
