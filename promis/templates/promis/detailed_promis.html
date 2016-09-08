@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {%load staticfiles%}
 {% block content %}
+
+<meta name="Description" content="{{promis.title}}">
+
     <section class="container">
         <div class="header__block mb20">
         </div>
@@ -56,6 +59,18 @@
         
       </div>
     </div>
+    {% if promis.status == 'Не выполнено' %}
+      <div class="container-fluid" style="background-color:#f96666">
+        <h4 class="text-center">Обещание не выполнено</h4>
+      </div>
+      <br>
+    {% elif promis.status == 'Выполнено' %} 
+      <div class="container-fluid" style="background-color:#67b767">
+        <h4 class="text-center">Обещание выполнено</h4>
+      </div>
+      <br>
+    {% endif %}
+
   <div class="timeline timeline-actually">
     <div class="timeline__container">
         <div class="timeline__head">
@@ -67,14 +82,14 @@
         <div class="bvote__action">
                 {% if my_rank %}
                   {% if my_rank.positive %}
-                  <a  class="bvote-btn bvote-btn_believe" style="background-color:#d65858">
+                  <a  class="bvote-btn" style="background:#67b767">
                     <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i><span class="btn-text">Верю</span>
                   </a>
-                <a href="{% url 'promis:not_believe' promis.id %}"  class="bvote-btn bvote-btn_bottom bvote-btn_not-believe">
+                <a href="{% url 'promis:not_believe' promis.id %}"  style="background:grey" class="bvote-btn bvote-btn_bottom bvote-b">
                     <i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i><span class="btn-text">Не верю</span>
                 </a>
                   {% else %}
-                  <a href="{% url 'promis:believe' promis.id %}"  class="bvote-btn bvote-btn_believe">
+                <a href="{% url 'promis:believe' promis.id %}"  style="background:grey"  class="bvote-btn bvote-btn_believe">
                     <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i><span class="btn-text">Верю</span>
                 </a>
                 <a class="bvote-btn bvote-btn_bottom bvote-btn_not-believe" style="background-color:#d65858">
@@ -84,53 +99,53 @@
 
                 {% else %}
 
-                <a href="{% url 'promis:believe' promis.id %}"  class="bvote-btn bvote-btn_believe">
+                <a href="{% url 'promis:believe' promis.id %}" style="background:grey" class="bvote-btn bvote-btn_believe">
                     <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i><span class="btn-text">Верю</span>
                 </a>
-                <a href="{% url 'promis:not_believe' promis.id %}"  class="bvote-btn bvote-btn_bottom bvote-btn_not-believe">
+                <a href="{% url 'promis:not_believe' promis.id %}" style="background:grey"  class="bvote-btn bvote-btn_bottom bvote-btn_not-believe">
                     <i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i><span class="btn-text">Не верю</span>
                 </a>
                 {% endif %}
-            
-        </div>
-        <div style="display:none;">
-            <input class="js_vote_sum_votes_plus_one" value="19">
-            <input class="js_vote_yes" value="8">
         </div>
     
 </div>
 
           </div>
           <div class="timeline__event">
-            <span class="timeline__date">{{promis.date.date|date:"c"}}</span>
+            <span class="timeline__date">{{promis.date|date:"c"}}</span>
             <span class="status">Дата обещания</span>
           </div>
         </div>
         <div class="normalize">
-          <p>{{promis.body}}</p>
+          <p>{{promis.body|linebreaks}}</p>
+        </div>  
+        {% if not past_deadline %}
+        <div class="timeline__status timeline__status-refuse ">
+          <div class="timeline__event">
+            <span class="timeline__date">{{today|date:"c"}}</span>
+            
+              <span class="status">Сегодня</span>
+            
+          </div>
+          <a data-toggle="modal" data-target="#ResultModal" class="btn js-popupwin">подвести итог</a>
         </div>
-      
-        
-        
-          
-              <div class="timeline__status timeline__status-refuse ">
-                <div class="timeline__event">
-                  <span class="timeline__date">23.08.2016</span>
-                  
-                    <span class="status">Активно</span>
-                  
-                </div>
-                <a data-toggle="modal" data-target="#ResultModal" class="btn js-popupwin">подвести итог</a>
-              </div>
-            <div class="timeline__status timeline__status-final timeline__status-last">
-              <div class="timeline__event">
-                <span class="timeline__date">{{promis.deadline.date|date:"c"}}</span>
-                <span class="status">Срок до</span>
-              </div>
-            </div>
-          
-        
-      
+        {% endif %}
+
+        <div class="timeline__status timeline__status-final timeline__status-last">
+          <div class="timeline__event">
+            <span class="timeline__date">{{promis.deadline|date:"c"}}</span>
+            <span class="status">Срок до</span>
+          </div>
+        </div>
+        {% if past_deadline %}
+          <div class="timeline__status timeline__status-refuse ">
+          <div class="timeline__event">
+            <span class="timeline__date">{{today|date:"c"}}</span>
+              <span class="status" style="color:red">Сегодня</span>
+          </div>
+          <a data-toggle="modal" data-target="#ResultModal" class="btn js-popupwin">подвести итог</a>
+        </div>
+        {% endif %}
     </div>
   </div>
 
@@ -255,7 +270,7 @@
       
         <p class="text">{{promis.title}}</p>
       
-        <a href="{{promis.link}}" class="link" target="_blank">{{promis.link}}</a>
+        <a href="http://{{promis.link}}" class="link" target="_blank">{{promis.link}}</a>
       
       <div class="clearfix"></div>
         <img src="../../{{promis.screenshot}}">

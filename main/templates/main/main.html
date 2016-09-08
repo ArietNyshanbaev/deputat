@@ -31,8 +31,14 @@
 <div class="row">      
 {% for promis in promises %} 
 
-<div class="cell">    
+<div class="cell" >  
+{% if promis.status == 'Выполнено' %}  
+<div class="tw-block" style="background-color:#67b767">
+{% elif promis.status == 'Не выполнено'%}
+<div class="tw-block" style="background-color:#f96666">
+{% else %}
 <div class="tw-block">
+{% endif %}
   <span class="status status-actually">
     Обещание
   </span>
@@ -41,7 +47,7 @@
             <img src="../../{{promis.person.photo}}" alt="{{promis.person.first_name}} {{promis.person.last_name}}" class="avatar-img">
           </a>
       </div>
-      <span class="tw-block-note">Фракция {{promis.person.party}}</span>
+      <span class="tw-block-note" style="color:black">Фракция {{promis.person.party}}</span>
       <a href="{% url 'promis:detailed_promis' promis.id %}" class="tw-block-title">
           {{promis.title}}
       </a>

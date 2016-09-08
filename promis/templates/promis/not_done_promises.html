@@ -11,10 +11,10 @@
     </div>
     <section class="container-fluid">
       <div class="filter-promises">
-
+<div class="row">
 {% for promis in promises %}
 <div class="col-md-8 col-md-offset-2">
-<section class="speech speech_promises">
+<section class="speech speech_promises" style="background-color:#f96666">
   <span class="speech__section status-actually">
       Обещание
     </span>
@@ -42,9 +42,11 @@
 </div>
   </div>
 </section>
+</div>
 {% endfor %}
+</div>
+{% include 'paggination.html' %}  
       </div>
-      {% include 'paggination.html' %}  
       </div>
     </section>
 

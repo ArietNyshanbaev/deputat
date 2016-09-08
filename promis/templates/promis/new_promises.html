@@ -20,7 +20,7 @@
   </span>
   <div class="speech__content">
     <a href="{% url 'person:detailed_person' promis.person.id %}" class="avatar-circle avatar-circle_large">
-      <img src="../../{{promis.person.photo}}" alt="" class="avatar-img">
+      <img src="../../{{promis.person.photo}}" alt="{{promis.person.first_name}} {{promis.person.last_name}}" class="avatar-img">
     </a>
     <div class="info">
       <div class="entry-title">

@@ -7,6 +7,7 @@ from .models import Promis, Result, PromisRank, Comments
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from datetime import date
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required
@@ -29,8 +30,14 @@ def detailed_promis(request, promis_id):
 	args['comments'] = Comments.objects.filter(promis=promis, comment=None, is_approved=True)
 	args['comments_all'] = Comments.objects.filter(promis=promis, is_approved=True)
 	args['promis'] = promis
+	today = date.today()
+	args['today'] = today 
+	if today > promis.deadline:
+		args['past_deadline'] = True
 	args['positive_rank'] = PromisRank.objects.filter(promis=promis, positive=True).count()
 	args['negative_rank'] = PromisRank.objects.filter(promis=promis, positive=False).count()
+	if request.user.is_authenticated() and PromisRank.objects.filter(user=request.user, promis=promis).exists():
+		args['my_rank'] = PromisRank.objects.filter(user=request.user, promis=promis)[0]
 	if PromisRank.objects.filter(promis=promis).count() > 0:
 		args['rank_persentage'] = PromisRank.objects.filter(promis=promis, positive=True).count() / PromisRank.objects.filter(promis=promis).count() * 100
 		print PromisRank.objects.filter(promis=promis, positive=True).count() / PromisRank.objects.filter(promis=promis).count() * 100
@@ -108,7 +115,7 @@ def add_result(request):
 		promis_id = request.POST.get('promis_id', '')
 		promis = get_object_or_404(Promis, pk=promis_id)
 		result = Result.objects.create(text=content, user=request.user, promis=promis)
-	messages.info(request, 'Спасибо ваш итог отправлено модератору на просмотр.')
+	messages.info(request, 'Спасибо, ваш итог отправлено модератору на просмотр.')
 	return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required(login_url=reverse_lazy('auths:signin'))
@@ -139,7 +146,7 @@ def not_believe(request, promis_id):
 	else:
 		rank = PromisRank.objects.create(user=request.user, positive=False, promis=promis)
 	messages.info(request, 'Спасибо, ваш голос учтен.')
-	return redirect(request.META.get('HTTP_REFERER'))
+	return redirect(reverse('promis:detailed_promis', kwargs={'promis_id':promis.id}))
 
 @login_required(login_url=reverse_lazy('auths:signin'))
 @email_required 
