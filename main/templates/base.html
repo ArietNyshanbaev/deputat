@@ -182,10 +182,10 @@
    <div class="column column_first">
      <ul class="footer__section">
        <li class="item">
-         <a href="http://www.obeschania.ru/documents/" class="link">Обещания и прогнозы</a>
+         <a href="{% url 'promis:new_promises'%}" class="link">Обещания </a>
        </li>
        <li class="item">
-         <a href="http://www.obeschania.ru/opinions/" class="link">Мнения экспертов</a>
+         <a href="{% url 'forecast:main' %}" class="link">Мнения экспертов</a>
        </li>
      </ul>
      <div class="footer__note">
@@ -197,52 +197,38 @@
    <div class="column column_middle">
      <ul class="footer__section">
        <li class="item">
-         <a href="http://www.obeschania.ru/persons/" class="link">Персоны</a>
+         <a href="{% url 'person:zhogorku_kenesh'%}" class="link">Жогорку Кенеш</a>
        </li>
        <li class="item">
-         <a href="http://www.obeschania.ru/organizations/" class="link">Организации</a>
+         <a href="{% url 'person:mestnyi_kenesh' %}" class="link">Местный Кенеш</a>
        </li>
      </ul>
      <ul class="footer__nav">
       <li class="item">
-        <a href="http://www.obeschania.ru/about/" class="link">О проекте</a>
-      </li>
-      <li class="item">
-        <a href="http://www.obeschania.ru/editors/" class="link">Редакция</a>
-      </li>
-      <li class="item">
-        <a href="http://www.obeschania.ru/volunteers/" class="link">Стать волонтёром</a>
-      </li>
-      <li class="item">
-        <a href="javascript:;" data-fancybox-href="/feedback/" class="link js-popupwin fancybox.ajax">Обратная связь</a>
+        <a href="" class="link">О проекте</a>
       </li>
      </ul>
    </div>
    <div class="column column_last">
      <ul class="footer__section">
        <li class="item">
-         <a href="http://www.obeschania.ru/news/" class="link">Новости</a>
+         <a href="{% url 'news:main' %}" class="link">Новости</a>
+       </li>
+       <li class="item">
+         <a href="{% url 'stopkadr:main' %}" class="link">Медиа Факты</a>
        </li>
      </ul>
      <ul class="footer__nav">
        <li class="item mb20">
-         <a href="http://www.obeschania.ru/terms/" class="link">Условия распространения <br>материалов</a>
+         <a href="" class="link">Условия распространения <br>материалов</a>
        </li>
        <li class="item">
          <div class="small-soc-links">
               
                   <a href="http://vk.com/obeschania" target="_blank" class="soc-item soc-link soc-link_vk"></a>
-              
-              
                   <a href="http://facebook.com/obeschania" target="_blank" class="soc-item soc-link soc-link_fb"></a>
-              
-              
                   <a href="http://twitter.com/Obeschania" target="_blank" class="soc-item soc-link soc-link_tw"></a>
-              
-              
                   <a href="http://ok.ru/obeschania" target="_blank" class="soc-item soc-link soc-link_ok"></a>
-              
-              
               <br>
          </div>
        </li>

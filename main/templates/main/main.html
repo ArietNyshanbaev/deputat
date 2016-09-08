@@ -38,7 +38,7 @@
   </span>
       <div class="tw-block-avatart">
           <a href="{% url 'person:detailed_person' promis.person.id %}" class="avatar-circle avatar-circle_middle">
-            <img src="../../{{promis.person.photo}}" alt="Дональд Трамп" class="avatar-img">
+            <img src="../../{{promis.person.photo}}" alt="{{promis.person.first_name}} {{promis.person.last_name}}" class="avatar-img">
           </a>
       </div>
       <span class="tw-block-note">Фракция {{promis.person.party}}</span>
