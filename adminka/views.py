@@ -250,19 +250,48 @@ def comments_of_promis(request, promis_id):
 	template = 'adminka/comments_of_promis.html'
 	return render(request, template, args)
 
+def results_of_promis(request, promis_id):
+	args = {}
+	promis = get_object_or_404(Promis, pk=promis_id)
+	args['results'] = Result.objects.filter(promis=promis)
+	template = 'adminka/results_of_promis.html'
+	return render(request, template, args)
+
+def detailed_result(request, result_id):
+	args = {}
+	args['result'] = get_object_or_404(Result, id=result_id)
+	template = 'adminka/detailed_result.html'
+	return render(request, template, args)
+
+def delete_result(request, result_id):
+	result = get_object_or_404(Result, id=result_id)
+	promis_id = result.promis.id
+	result.delete()
+	messages.info(request, 'Вы удалили данный итог. ')
+	return redirect(reverse('adminka:results_of_promis', kwargs={'promis_id': promis_id}))
+
 def approve_comment(request, comment_id):
 	comment = get_object_or_404(Comments, pk=comment_id)
 	comment.is_approved = True
 	comment.save()
-	messages.info(request, 'Вы подтвердили комент :' + comment.content)
+	messages.info(request, 'Вы подтвердили комент : ' + comment.content[:15])
 	return redirect(reverse('adminka:comments_of_promis', kwargs={'promis_id': comment.promis.id}))
 
 def disapprove_comment(request, comment_id):
 	comment = get_object_or_404(Comments, pk=comment_id)
 	comment.is_approved = False
 	comment.save()
-	messages.info(request, 'Вы скрыли комент :' + comment.content)
+	messages.info(request, 'Вы скрыли комент : ' + comment.content[:15])
 	return redirect(reverse('adminka:comments_of_promis', kwargs={'promis_id': comment.promis.id}))
+
+def delete_comment(request, comment_id):
+	comment = get_object_or_404(Comments, pk=comment_id)
+	content = comment.content
+	promis_id = comment.promis.id
+	comment.delete()
+	messages.info(request, 'Вы удалили комент : ' + content[:15])
+	return redirect(reverse('adminka:comments_of_promis', kwargs={'promis_id': promis_id}))
+
 
 def comments_of_news(request, news_id):
 	args = {}
@@ -275,15 +304,24 @@ def approve_comment_news(request, comment_id):
 	comment = get_object_or_404(NewsComment, pk=comment_id)
 	comment.is_approved = True
 	comment.save()
-	messages.info(request, 'Вы подтвердили комент :' + comment.content)
+	messages.info(request, 'Вы подтвердили комент : ' + comment.content[:15])
 	return redirect(reverse('adminka:comments_of_news', kwargs={'news_id': comment.news.id}))
 
 def disapprove_comment_news(request, comment_id):
 	comment = get_object_or_404(NewsComment, pk=comment_id)
 	comment.is_approved = False
 	comment.save()
-	messages.info(request, 'Вы скрыли комент :' + comment.content)
+	messages.info(request, 'Вы скрыли комент : ' + comment.content[:15])
 	return redirect(reverse('adminka:comments_of_news', kwargs={'news_id': comment.news.id}))
+
+def delete_comment_news(request, comment_id):
+	comment = get_object_or_404(NewsComment, pk=comment_id)
+	content = comment.content
+	news_id = comment.news.id
+	comment.delete()
+	messages.info(request, 'Вы удалили комент : ' + content[:15])
+	return redirect(reverse('adminka:comments_of_news', kwargs={'news_id': news_id}))
+
 
 def comments_of_forecast(request, forecast_id):
 	args = {}
@@ -296,15 +334,23 @@ def approve_comment_forecast(request, comment_id):
 	comment = get_object_or_404(ForecastComment, pk=comment_id)
 	comment.is_approved = True
 	comment.save()
-	messages.info(request, 'Вы подтвердили комент :' + comment.content)
+	messages.info(request, 'Вы подтвердили комент : ' + comment.content[:15])
 	return redirect(reverse('adminka:comments_of_forecast', kwargs={'forecast_id': comment.forecast.id}))
 
 def disapprove_comment_forecast(request, comment_id):
 	comment = get_object_or_404(ForecastComment, pk=comment_id)
 	comment.is_approved = False
 	comment.save()
-	messages.info(request, 'Вы скрыли комент :' + comment.content)
+	messages.info(request, 'Вы скрыли комент : ' + comment.content[:15])
 	return redirect(reverse('adminka:comments_of_forecast', kwargs={'forecast_id': comment.forecast.id}))
+
+def delete_comment_forecast(request, comment_id):
+	comment = get_object_or_404(ForecastComment, pk=comment_id)
+	content = comment.content
+	forecast_id = comment.forecast.id
+	comment.delete()
+	messages.info(request, 'Вы удалили комент : ' + content[:15])
+	return redirect(reverse('adminka:comments_of_forecast', kwargs={'forecast_id': forecast_id}))
 
 def mediafiles(request):
 	args = {}

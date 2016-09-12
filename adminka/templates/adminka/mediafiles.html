@@ -78,7 +78,7 @@
                                         <th scope="row">{{forloop.counter}}</th> 
                                         <td> {{file.description|slice:"20"}} </td> 
                                         <td> {{file.date|slice:"20"}} </td> 
-                                        <td><a href="" target="_blank" >Посмотреть</a></td> 
+                                        <td><a href="{% url 'stopkadr:detailed_mediafile' file.id %}" target="_blank">Посмотреть</a></td> 
                                         <td><a href="{% url 'adminka:edit_mediafile' file.id %}">Изменить</a></td> 
                                         <td><a href="" data-toggle="modal" data-target="#deleteFile{{file.id}}" >Удалить</a></td> 
                                     </tr>

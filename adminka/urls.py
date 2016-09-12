@@ -29,16 +29,22 @@ urlpatterns = [
     url(r'^promises/edit_promis/(?P<promis_id>.+)$', 'adminka.views.edit_promis', name='edit_promis'),
     # Routes to comments of Promises section of Adminka module
     url(r'^comments_of_promis/(?P<promis_id>.+)$', 'adminka.views.comments_of_promis', name='comments_of_promis'),
+    url(r'^results_of_promis/(?P<promis_id>.+)$', 'adminka.views.results_of_promis', name='results_of_promis'),
+    url(r'^detailed_result/(?P<result_id>.+)$', 'adminka.views.detailed_result', name='detailed_result'),
+    url(r'^delete_result/(?P<result_id>.+)$', 'adminka.views.delete_result', name='delete_result'),
     url(r'^approve_comment/(?P<comment_id>.+)$', 'adminka.views.approve_comment', name='approve_comment'),
     url(r'^disapprove_comment/(?P<comment_id>.+)$', 'adminka.views.disapprove_comment', name='disapprove_comment'),
+    url(r'^delete_comment/(?P<comment_id>.+)$', 'adminka.views.delete_comment', name='delete_comment'),
     # Routes to comments of News section of Adminka module
     url(r'^comments_of_news/(?P<news_id>.+)$', 'adminka.views.comments_of_news', name='comments_of_news'),
     url(r'^approve_comment_news/(?P<comment_id>.+)$', 'adminka.views.approve_comment_news', name='approve_comment_news'),
     url(r'^disapprove_comment_news/(?P<comment_id>.+)$', 'adminka.views.disapprove_comment_news', name='disapprove_comment_news'),
+    url(r'^delete_comment_news/(?P<comment_id>.+)$', 'adminka.views.delete_comment_news', name='delete_comment_news'),
     # Routes to comments of Forecast section of Adminka module
     url(r'^comments_of_forecast/(?P<forecast_id>.+)$', 'adminka.views.comments_of_forecast', name='comments_of_forecast'),
     url(r'^approve_comment_forecast/(?P<comment_id>.+)$', 'adminka.views.approve_comment_forecast', name='approve_comment_forecast'),
     url(r'^disapprove_comment_forecast/(?P<comment_id>.+)$', 'adminka.views.disapprove_comment_forecast', name='disapprove_comment_forecast'),
+    url(r'^delete_comment_forecast/(?P<comment_id>.+)$', 'adminka.views.delete_comment_forecast', name='delete_comment_forecast'),
     # Routes to comments of Stop Kadr section of Adminka module
     url(r'^mediafiles$', 'adminka.views.mediafiles', name='mediafiles'),
     url(r'^mediafiles/delete_mediafile/(?P<file_id>.+)$', 'adminka.views.delete_mediafile', name='delete_mediafile'),

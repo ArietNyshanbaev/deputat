@@ -34,13 +34,14 @@ def detailed_promis(request, promis_id):
 	args['today'] = today 
 	if today > promis.deadline:
 		args['past_deadline'] = True
-	args['positive_rank'] = PromisRank.objects.filter(promis=promis, positive=True).count()
-	args['negative_rank'] = PromisRank.objects.filter(promis=promis, positive=False).count()
+	positive = PromisRank.objects.filter(promis=promis, positive=True).count()
+	negative = PromisRank.objects.filter(promis=promis, positive=False).count()
+	args['positive_rank'] = positive
+	args['negative_rank'] = negative
 	if request.user.is_authenticated() and PromisRank.objects.filter(user=request.user, promis=promis).exists():
 		args['my_rank'] = PromisRank.objects.filter(user=request.user, promis=promis)[0]
 	if PromisRank.objects.filter(promis=promis).count() > 0:
-		args['rank_persentage'] = PromisRank.objects.filter(promis=promis, positive=True).count() / PromisRank.objects.filter(promis=promis).count() * 100
-		print PromisRank.objects.filter(promis=promis, positive=True).count() / PromisRank.objects.filter(promis=promis).count() * 100
+		args['rank_persentage'] = positive * 1.0 / (negative + positive) * 100
 	return render(request, 'promis/detailed_promis.html', args)
 
 def new_promises(request):

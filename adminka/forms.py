@@ -34,8 +34,7 @@ class PersonForm(forms.ModelForm):
 
 	marital_status = forms.ChoiceField(label=' Семейное положение ', choices=MARITAL_STATUS_LIST, widget=forms.Select(attrs={'class':'form-control'}))
 
-	biography = forms.CharField(label=' Биография ', widget=CKEditorWidget(config_name='awesome_ckeditor'))
-
+	biography = forms.CharField(label=' Биография ', widget=forms.Textarea(attrs={'class':'form-control', 'rows':6, 'style':'resize: none;'}) )
 	contacts = forms.CharField(
 		label=' Контактные данные ', 
 		required=True, 
@@ -43,7 +42,7 @@ class PersonForm(forms.ModelForm):
 		widget=forms.TextInput(attrs={'required': 'true', 'class':'form-control'})
 	)
 
-	estate = forms.CharField(label=' Имушество ', widget=CKEditorWidget(config_name='awesome_ckeditor'))
+	estate = forms.CharField(label=' Имущество ', widget=forms.Textarea(attrs={'class':'form-control', 'rows':6, 'style':'resize: none;'}) )
 
 	category = forms.ModelChoiceField(label=' Кенеш ', queryset=Category.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))
 
@@ -63,8 +62,7 @@ class NewsForm(forms.ModelForm):
 		widget=forms.TextInput(attrs={'required': 'true', 'class':'form-control'})
 	)
 
-	body = forms.CharField(label=' Тело ', widget=CKEditorWidget(config_name='awesome_ckeditor'))
-
+	body = forms.CharField(label=' Тело ', widget=forms.Textarea(attrs={'class':'form-control', 'rows':6, 'style':'resize: none;'}) )
 	class Meta:
 		model = News
 		exclude = ('date',)
@@ -79,7 +77,7 @@ class PromisForm(forms.ModelForm):
 
 	person = forms.ModelChoiceField(label=' Депутат ', queryset=Person.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))
 
-	body = forms.CharField(label=' Тело ', widget=CKEditorWidget(config_name='awesome_ckeditor'))
+	body = forms.CharField(label=' Тело ', widget=forms.Textarea(attrs={'class':'form-control', 'rows':6, 'style':'resize: none;'}) )
 
 	date = forms.DateField(label=' Дата обещания ', widget=forms.TextInput(attrs={'type':'date', 'class':'form-control'}))
 
@@ -118,7 +116,7 @@ class ForecastForm(forms.ModelForm):
 		widget=forms.TextInput(attrs={'required': 'true', 'class':'form-control'})
 	)
 
-	body = forms.CharField(label=' Тело ', widget=CKEditorWidget(config_name='awesome_ckeditor'))
+	body = forms.CharField(label=' Тело ', widget=forms.Textarea(attrs={'class':'form-control', 'rows':6, 'style':'resize: none;'}) )
 
 
 	class Meta:

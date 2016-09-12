@@ -1,6 +1,7 @@
 ﻿{% extends 'base.html' %}
 {%load staticfiles%}
 {% block content %}
+<meta name="Description" content="{{new.title}}">
     <section class="container">
       
         <div class="header__block mb20">
@@ -23,12 +24,13 @@
         <img src=" ../../{{new.photo}}">
         <br>
         <hr>
-        <p>{{new.body}}</p>
+        <p>{{new.body|linebreaks}}</p>
       </article>
 
 <div class="share-btn ">
-    <span class="share-title">Дата <br>{{new.date}}</span>
+    <span class="share-title">Дата : {{new.date}}</span>
 </div>
+<br>
 <div class="share42init"></div>
 <script type="text/javascript" src="{% static 'share42/share42.js' %}"></script>
     </section>

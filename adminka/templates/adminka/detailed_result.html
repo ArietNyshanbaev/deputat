@@ -1,0 +1,36 @@
+﻿{% extends 'base.html' %}
+{%load staticfiles%}
+{% block content %}
+<meta name="Description" content="{{new.title}}">
+    <section class="container">
+      
+        <div class="header__block mb20">
+          
+        </div>
+      
+      
+  <section class="constrain">
+  </section>
+  <div class="constrain">
+    <div class="mini-head">
+      <span class="mini-head__title">Итог</span>
+    </div>
+    <section class="content mb50">
+      <header class="news-title">
+        <h1 class="news-name">{{result.promis.title}}</h1>
+      </header>
+
+      <article class="news-article" id="news_article">
+        <hr>
+        <p>{{result.text|linebreaks}}</p>
+      </article>
+
+<div class="share-btn ">
+    <span class="share-title">Пользователь : {{result.user.username}}</span>
+</div>
+<br>
+</section>
+</div>
+  </div><!-- class="constrain" -->
+</div>
+{% endblock %}

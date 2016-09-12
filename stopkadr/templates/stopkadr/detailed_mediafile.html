@@ -1,6 +1,7 @@
 ﻿{% extends 'base.html' %}
 {%load staticfiles%}
 {% block content %}
+<meta name="Description" content="{{file.description}}">
     <section class="container">
       
         <div class="header__block mb20">
@@ -14,13 +15,14 @@
     <div class="mini-head">
       <span class="mini-head__title">Медиа файл</span>
     </div>
+    
     <section class="content mb50">
       <header class="news-title">
         <h1 class="news-name">{{file.description}}</h1>
       </header>
       {% if file.is_video %}
       <article class="news-article" id="news_article">
-        <video width="620" controls>
+        <video width="620" controls poster="../../{{file.photo}}">
           <source src="../../{{file.video}}" type="video/mp4">
         </video>
       </article>
@@ -29,16 +31,19 @@
         <img src=" ../../{{file.photo}}">
       </article>
       {% endif %}
-
 <div class="share-btn ">
-    <span class="share-title">Дата <br>{{file.date}}</span>
+    <span class="share-title">Дата : {{file.date}}</span>
 </div>
+
+<br>
+      <div class="share42init"></div>
+<script type="text/javascript" src="{% static 'share42/share42.js' %}"></script>
+<br>
+  </div>  
 
       
     </section>
+
   </div><!-- class="constrain" -->
-  
-
-
-</div>
+  </section>
 {% endblock %}

@@ -65,7 +65,9 @@
                                     <th>Пользователь</th> 
                                     <th>Комментарий</th> 
                                     <th>Дата</th>
+                                    <th>Посмотреть</th>
                                     <th>Изменить</th>
+                                    <th>Удалить</th>
                                 </tr> 
                             </thead>
                             <tbody> 
@@ -73,13 +75,15 @@
                                     <tr>
                                         <th scope="row">{{forloop.counter}}</th>
                                         <td> {{comment.user.username}} </td>
-                                        <td> {{comment.content}} </td>
+                                        <td> {{comment.content|slice:"16"}} </td>
                                         <td> {{comment.date}} </td>
+                                        <td><a href="" data-toggle="modal" data-target="#viewComment{{comment.id}}">Посмотреть</a></td>
                                         {% if comment.is_approved %}
                                             <td><a href="{% url 'adminka:disapprove_comment_forecast' comment.id %}">Скрыть</a></td> 
                                         {% else %}
                                             <td><a href="{% url 'adminka:approve_comment_forecast' comment.id %}">Разрешить</a></td> 
                                         {% endif %}
+                                        <td><a href="" data-toggle="modal" data-target="#deleteComment{{comment.id}}">Удалить</a></td>
                                     </tr>
                                 {% endfor %}
                             </tbody> 
@@ -89,4 +93,45 @@
             </div>
         </div>
     </body>
+
+       <!-- DELETE COMMENT MODAL PAGE -->
+{% for comment in comments %}
+<div class="modal fade" id="deleteComment{{comment.id}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Вы действительно хотите удалить этот комент ?</h4>
+      </div>
+      <div class="modal-body">
+      <p>{{comment.content}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        <a href="{% url 'adminka:delete_comment_forecast' comment.id %}"><button style="background-color:#ca4b2f" class="btn btn-primary"> Удалить </button></a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endfor %}
+
+  <!-- VIEW COMMENT MODAL PAGE -->
+{% for comment in comments %}
+<div class="modal fade" id="viewComment{{comment.id}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{comment.user.username}}</h4>
+      </div>
+      <div class="modal-body">
+      <p>{{comment.content}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endfor %}
 </html>

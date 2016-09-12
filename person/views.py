@@ -1,6 +1,6 @@
 ﻿from django.shortcuts import render, get_object_or_404
 from .models import Party, Person, Region
-from promis.models import  Promis
+from promis.models import  Promis, PromisRank
 
 def zhogorku_kenesh(request, party_id=-1):
 	args = {}
@@ -35,8 +35,21 @@ def mestnyi_kenesh(request, region_id=-1, party_id=-1):
 def detailed_person(request, person_id):
 	args = {}
 	person = get_object_or_404(Person, pk=person_id)
-	args['promises'] = Promis.objects.filter(person=person)
+	promises = Promis.objects.filter(person=person)
+	args['promises'] = promises
+	positive = 0
+	negative = 0
+	
+	for promis in promises:
+		positive += PromisRank.objects.filter(promis=promis, positive=True).count()
+		negative += PromisRank.objects.filter(promis=promis, positive=False).count()
+	if positive + negative > 0:
+		rank = positive * 1.0 / (positive + negative) * 100
+		args['rank'] = rank
+		args['int_unrank'] = (100 - int(rank))
+		args['int_rank'] = int(rank)
 	args['person'] = person
+	args['new_promises'] = Promis.objects.filter(person=person, status='Новое ').count()
 	args['done_promises'] = Promis.objects.filter(person=person, status='Выполнено').count()
 	args['not_done_promises'] = Promis.objects.filter(person=person, status='Не выполнено').count()
 	template = 'person/detailed_person.html'
